@@ -1,0 +1,14 @@
+.deposit{
+  color: #C4C4C4;
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+.deposit:hover{
+  color: #007bff;
+  text-decoration: none;
+}
+
+.navbar-brand{  
+  font-size: 25px;
+}
