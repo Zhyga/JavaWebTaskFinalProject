@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
     private static final UserDaoImpl instance = new UserDaoImpl();
@@ -49,14 +50,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findUserByEmail(String email) throws DaoException {
-        User user = null;
+    public Optional<User> findUserByEmail(String email) throws DaoException {
+        Optional<User> user = Optional.empty();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_EMAIL);
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                user = createUserFromResultSet(resultSet);
+                user = Optional.of(createUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DaoException("Error while finding all users", e);
@@ -65,14 +66,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findUserByLogin(String login) throws DaoException {
-        User user = null;
+    public Optional<User> findUserByLogin(String login) throws DaoException {
+        Optional<User> user = Optional.empty();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(FIND_BY_LOGIN);
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                user = createUserFromResultSet(resultSet);
+                user = Optional.of(createUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DaoException("Error while finding all users", e);
@@ -81,14 +82,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User authorize(String login) throws DaoException {
-        User user = null;
+    public Optional<User> authorize(String login) throws DaoException {
+        Optional<User> user = Optional.empty();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(AUTHORIZE);
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                user = createUserFromResultSet(resultSet);
+                user = Optional.of(createUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
             throw new DaoException("Error while authorize user", e);

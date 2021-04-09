@@ -12,3 +12,15 @@
 .navbar-brand{  
   font-size: 25px;
 }
+
+.language-choice{
+  color: #C4C4C4;
+}
+
+.language-choice:hover{
+  color: #007bff;
+}
+
+.dropdown-menu{
+  min-width: auto;
+}

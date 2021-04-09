@@ -28,11 +28,21 @@ public enum CommandType {
             this.command = new FindByEmailCommand();
         }
     },
+    TO_MAIN{
+        {
+            this.command = new ToMainPageCommand();
+        }
+    },
     TO_SIGN_UP{
         {
             this.command = new ToSignUpPageCommand();
         }
-    };
+    },
+    TO_SIGN_IN{
+        {
+            this.command = new ToSignInPageCommand();
+        }
+    };;
 
     Command command;
 

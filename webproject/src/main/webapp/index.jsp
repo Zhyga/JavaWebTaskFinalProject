@@ -5,6 +5,8 @@
 <head>
 </head>
 <body>
-    <jsp:forward page="pages/header.jsp"></jsp:forward>
+    <jsp:forward page="/controller">
+        <jsp:param name="command" value="to_main"/>
+    </jsp:forward>
 </body>
 </html>

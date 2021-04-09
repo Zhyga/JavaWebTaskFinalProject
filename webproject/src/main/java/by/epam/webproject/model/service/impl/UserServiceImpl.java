@@ -12,6 +12,7 @@ import by.epam.webproject.util.PasswordEncryptor;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     private final UserDao userDao = UserDaoImpl.getInstance();
@@ -25,8 +26,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User findUsersByEmail(String email) throws ServiceException {
-        User user;
+    public Optional<User> findUserByEmail(String email) throws ServiceException {
+        Optional<User> user;
         try {
             user = userDao.findUserByEmail(email);
         } catch (DaoException e) {
@@ -35,8 +36,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public User authorizeUser(String login, String password) throws ServiceException {
-        User user = null;
+    public Optional<User> authorizeUser(String login, String password) throws ServiceException {
+        Optional<User> user = Optional.empty();
         try {
             if (UserValidator.isLoginCorrect(login) && UserValidator.isPasswordCorrect(password)) {
                 String userPassword = userDao.checkByLogin(login);
@@ -56,9 +57,9 @@ public class UserServiceImpl implements UserService {
         try{
             if(UserValidator.isLoginCorrect(login) && UserValidator.isPasswordCorrect(password)
             && UserValidator.isEmailCorrect(email)){
-                User existingLogin = userDao.findUserByLogin(login);
-                User existingEmail = userDao.findUserByEmail(email);
-                if(existingLogin != null || existingEmail != null ){
+                Optional<User> existingLogin = userDao.findUserByLogin(login);
+                Optional<User> existingEmail = userDao.findUserByEmail(email);
+                if(existingLogin.isPresent() || existingEmail.isPresent()){
                     return  isUserCreated;
                 }
                 String encPassword = PasswordEncryptor.encryptPassword(password);

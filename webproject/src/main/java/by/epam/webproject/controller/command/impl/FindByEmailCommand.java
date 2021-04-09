@@ -23,7 +23,7 @@ public class FindByEmailCommand implements Command {
         String page;
         String email = request.getParameter("user_mail");
         try {
-            users.add(userService.findUsersByEmail(email));
+            users.add(userService.findUserByEmail(email).get());
             request.setAttribute("lst", users);
             page = PagePath.MAIN;
         } catch (ServiceException e) {
