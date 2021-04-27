@@ -12,7 +12,6 @@ import javax.servlet.http.*;
 
 public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
-    private static final String COMMAND = "command";
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -25,16 +24,12 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String commandName = req.getParameter(COMMAND);
+        String commandName = req.getParameter(RequestParameter.COMMAND);
         Command command = CommandProvider.defineCommand(commandName);
         String page = command.execute(req);
-        if (page != null) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-            dispatcher.forward(req, resp);
-        } else {
-            page = PagePath.HOME;
-            resp.sendRedirect(req.getContextPath() + page);
-        }
+        HttpSession session = req.getSession();
+        session.setAttribute(SessionAttribute.CURRENT_PAGE,page);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
+        dispatcher.forward(req, resp);
     }
-
 }

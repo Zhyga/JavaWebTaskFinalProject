@@ -24,3 +24,18 @@
 .dropdown-menu{
   min-width: auto;
 }
+
+.pastEventsBut{
+  color: #007bff;
+  background-color: #ffffff;
+  background-color: transparent;
+}
+
+.pastEventsBut:hover{
+  color: #0056b3;
+}
+
+.clickable-row:hover{
+  cursor: pointer;
+  background-color: #d5dadd !important;
+}

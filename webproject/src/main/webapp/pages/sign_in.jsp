@@ -13,13 +13,13 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/project.css">
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+<jsp:include page="modules/header.jsp"/>
 <div class="container justify-content-center" style="width: 380px; margin-left: auto; margin-right: auto">
     <form action="controller" method="post">
         <div class="form-group">
             <label for="inputLogin"><ftm:message key="login.login"/></label>
             <input type="text" name="login" class="form-control" id="inputLogin" aria-describedby="loginHelp"
-                   placeholder="Enter email">
+                   placeholder="<ftm:message key="login.loginHelper"/>">
             <small id="loginHelp" class="form-text text-muted"><ftm:message key="login.loginHelper"/></small>
         </div>
         <div class="form-group">
@@ -34,6 +34,7 @@
         </button>
     </form>
 </div>
+<jsp:include page="modules/footer.jsp"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
 </body>

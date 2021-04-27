@@ -1,6 +1,7 @@
 package by.epam.webproject.controller.command.impl;
 
 import by.epam.webproject.controller.PagePath;
+import by.epam.webproject.controller.RequestParameter;
 import by.epam.webproject.controller.command.Command;
 import by.epam.webproject.model.entity.User;
 import by.epam.webproject.exception.ServiceException;
@@ -21,7 +22,7 @@ public class FindByEmailCommand implements Command {
     public String execute(HttpServletRequest request) {
         List<User> users = new ArrayList<>();
         String page;
-        String email = request.getParameter("user_mail");
+        String email = request.getParameter(RequestParameter.USER_EMAIL);
         try {
             users.add(userService.findUserByEmail(email).get());
             request.setAttribute("lst", users);

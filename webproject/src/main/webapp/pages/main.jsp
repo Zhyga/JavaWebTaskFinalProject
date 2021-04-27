@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <ftm:setLocale value="${currentLocale}"/>
 <ftm:setBundle basename="l10n.front-text"/>
 <html>
@@ -13,9 +14,47 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/project.css">
 </head>
 <body>
-<jsp:include page="header.jsp"/>
-
+<jsp:include page="modules/header.jsp"/>
+<div class="container" style="width: 980px; margin-left: auto; margin-right: auto">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <form action="controller" method="post" class="mb-0">
+                <button class="nav-link active" type="submit" name="command" value="to_main">
+                    <ftm:message key="main.currentEvents"/></button>
+            </form>
+        </li>
+        <li class="nav-item">
+            <form action="controller" method="post" class="mb-0">
+                <button class="nav-link pastEventsBut" type="submit" name="command" value="to_main">
+                    <ftm:message key="main.pastEvents"/></button>
+            </form>
+        </li>
+    </ul>
+    <br/>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col" style="border-top: none;"><ftm:message key="main.eventTime"/></th>
+            <th scope="col" style="border-top: none;"><ftm:message key="main.eventTitle"/></th>
+            <th scope="col" style="border-top: none;"><ftm:message key="main.eventRound"/></th>
+            <th scope="col" style="border-top: none;"><ftm:message key="main.eventDetails"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="race" items="${raceList}" varStatus="status">
+            <tr class="clickable-row" data-href="newTab" data-browse="${race.raceId}">
+                <td class="raceDate" data-browse="${race.raceData.date}"></td>
+                <td><c:out value="${race.title}"/></td>
+                <td><c:out value="${race.rounds}"/></td>
+                <td><c:out value="${race.details}"/></td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<jsp:include page="modules/footer.jsp"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/project.js"></script>
 </body>
 </html>

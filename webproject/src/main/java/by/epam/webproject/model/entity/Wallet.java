@@ -1,10 +1,15 @@
 package by.epam.webproject.model.entity;
 
 public class Wallet {
-    private int walletId;
+    private Integer walletId;
     private double balance;
 
-    public int getWalletId() {
+    public Wallet(Integer walletId, double balance){
+        this.walletId = walletId;
+        this.balance = balance;
+    }
+
+    public Integer getWalletId() {
         return walletId;
     }
 

@@ -84,7 +84,6 @@ public class User {
         }
 
         User user = (User) o;
-
         if (userId != user.userId) {
             return false;
         }
