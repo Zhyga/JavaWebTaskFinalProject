@@ -9,6 +9,7 @@ public class RaceValidator {
     private static final String ID_REGEX = "^[1-9]\\d{0,9}$";
     private static final String TITLE_REGEX = "^[A-Za-z]*\\s|[A-Za-z]*\\s[A-Za-z]*$";
     private static final String ROUNDS_REGEX = "^[1-9]{1,2}$";
+    private static final String DETAILS_REGEX = "^[A-Za-z\\s\\|\\.\\,]*$";
 
     public static boolean isIdCorrect(String id) {
         return isStringCorrect(id, ID_REGEX);
@@ -20,6 +21,10 @@ public class RaceValidator {
 
     public static boolean isRoundsCorrect(String rounds) {
         return isStringCorrect(rounds, ROUNDS_REGEX);
+    }
+
+    public static boolean isDetailsCorrect(String details) {
+        return isStringCorrect(details, DETAILS_REGEX);
     }
 
     public static boolean isRaceDateTimeCorrect(String date,String time) {

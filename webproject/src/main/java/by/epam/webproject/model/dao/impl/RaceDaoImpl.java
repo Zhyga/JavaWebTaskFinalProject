@@ -20,7 +20,7 @@ import java.util.List;
 
 public class RaceDaoImpl implements RaceDao {
     private static final RaceDaoImpl instance = new RaceDaoImpl();
-    private static final RaceDateDaoImpl raceDateDao = RaceDateDaoImpl.getInstance();
+    private static final RaceDateDaoImpl raceDateDao = RaceDateDaoImpl.getInstance();//todo on service level
     private static final String FIND_ALL = "SELECT race_id,title,rounds,details,races.race_data_id,race_data.date," +
             "race_data.participant_id FROM races INNER JOIN race_data ON races.race_data_id = race_data.race_data_id " +
             "ORDER BY race_data.date";
@@ -61,7 +61,7 @@ public class RaceDaoImpl implements RaceDao {
             statement.setString(1, title);
             statement.setInt(2, rounds);
             statement.setString(3, details);
-            raceDateDao.add(raceDate);
+            raceDateDao.add(raceDate);//todo move to service lvl
             statement.setInt(4,raceDate.getRaceDataId());
             statement.executeUpdate();
             isAdded = true;

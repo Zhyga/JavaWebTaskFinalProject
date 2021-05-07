@@ -15,4 +15,5 @@ public interface UserDao {
     Optional<String> checkByLogin(String login) throws DaoException;
     boolean add(String email, String login, String password, Wallet wallet) throws DaoException;
     boolean changeRole(int roleId,String login) throws DaoException;
+    boolean confirmEmail(String login) throws DaoException;
 }

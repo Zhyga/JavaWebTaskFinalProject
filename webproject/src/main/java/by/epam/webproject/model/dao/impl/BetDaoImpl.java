@@ -18,8 +18,7 @@ import java.util.List;
 public class BetDaoImpl implements BetDao {
     private static final BetDaoImpl instance = new BetDaoImpl();
     private static final String FIND_ALL_RACE_BETS = "SELECT bet_id,type_of_bet,first_multiplier,second_multiplier,bets.race_id " +
-            "FROM bets INNER JOIN races on bets.race_id = races.race_id " +
-            "WHERE race_id = ?";
+            "FROM bets INNER JOIN races on bets.race_id = races.race_id WHERE bets.race_id = ?";
 
     private BetDaoImpl() {
     }

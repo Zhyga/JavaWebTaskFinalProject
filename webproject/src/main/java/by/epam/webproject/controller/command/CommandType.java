@@ -13,9 +13,14 @@ public enum CommandType {
             this.command = new SignUpCommand();
         }
     },
-    CHANGE_BALANCE{
+    DEPOSIT{
         {
-            this.command = new ChangeBalanceCommand();
+            this.command = new DepositCommand();
+        }
+    },
+    WITHDRAW{
+        {
+            this.command = new WithdrawCommand();
         }
     },
     LOG_OUT{
@@ -33,6 +38,11 @@ public enum CommandType {
             this.command = new ChangeRoleCommand();
         }
     },
+    CONFIRM_EMAIL{
+        {
+            this.command = new ConfirmEmailCommand();
+        }
+    },
     DELETE_RACE{
         {
             this.command = new DeleteRaceCommand();
@@ -41,6 +51,11 @@ public enum CommandType {
     CREATE_RACE{
         {
             this.command = new CreateRaceCommand();
+        }
+    },
+    PLACE_BET{
+        {
+            this.command = new PlaceBetCommand();
         }
     },
     FIND_ALL_USERS{
@@ -66,6 +81,11 @@ public enum CommandType {
     TO_PROFILE{
         {
             this.command = new ToProfilePageCommand();
+        }
+    },
+    TO_ADD_BALANCE{
+        {
+            this.command = new ToBalanceEnrichPageCommand();
         }
     },
     TO_BET_PAGE{

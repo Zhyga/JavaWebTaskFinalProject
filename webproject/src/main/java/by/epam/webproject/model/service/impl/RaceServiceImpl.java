@@ -22,7 +22,7 @@ public class RaceServiceImpl implements RaceService {
         boolean isCreated = false;
         try {
             if(RaceValidator.isTitleCorrect(title) && RaceValidator.isRoundsCorrect(rounds) &&
-                    RaceValidator.isRaceDateTimeCorrect(date,time)) {
+                    RaceValidator.isRaceDateTimeCorrect(date,time) && RaceValidator.isDetailsCorrect(details)) {
                 int roundNumber = Integer.parseInt(rounds);
                 String race_data_string = date + " " + time;
                 DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

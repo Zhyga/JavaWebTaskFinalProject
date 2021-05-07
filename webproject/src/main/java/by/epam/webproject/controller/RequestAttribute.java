@@ -2,6 +2,7 @@ package by.epam.webproject.controller;
 
 public class RequestAttribute {
     public static final String SIGN_IN_ERROR = "errorLoginPasMessage";
+    public static final String CAR_NUMBER_ERROR = "errorIncorrectCarNumber";
     public static final String ZERO_BETS = "emptyBetInfoList";
     public static final String RACE_DELETED = "raceDeleted";
     public static final String RACE_CREATE_ERROR = "errorRaceCreated";

@@ -1,6 +1,12 @@
 package by.epam.webproject.model.entity;
 
 public enum UserRole {
+    GUEST{
+        {
+            this.roleId = 0;
+            this.roleName = "guest";
+        }
+    },
     USER{
         {
             this.roleId = 1;

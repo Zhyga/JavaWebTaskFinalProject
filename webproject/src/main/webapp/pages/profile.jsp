@@ -53,8 +53,8 @@
                 <tbody>
                 <label style="color: red">${emptyBetInfoList}</label>
                 <c:forEach var="betsInfo" items="${betsInfoList}" varStatus="status">
-                    <tr class="clickable-row" data-href="newTab">
-                        <td class="raceDate" data-browse="${betsInfo.date}"></td>
+                    <tr data-href="newTab">
+                        <td >${betsInfo.date}</td>
                         <td><c:out value="${betsInfo.betInfo}"/></td>
                         <td><c:out value="${betsInfo.betSize}"/></td>
                         <td><c:out value="${betsInfo.multiplier}"/></td>

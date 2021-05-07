@@ -31,11 +31,17 @@ public class SignInCommand implements Command {
         try {
             Optional<User> user = userService.authorizeUser(login, password);
             if (user.isPresent()) {
-                HttpSession session = request.getSession();
-                session.setAttribute(SessionAttribute.LOGIN, login);
-                session.setAttribute(SessionAttribute.BALANCE, user.get().getWallet().getBalance());
-                session.setAttribute(SessionAttribute.ROLE,user.get().getRole().getRoleName());
-                page = PagePath.MAIN;
+                if(user.get().getIsApproved()) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(SessionAttribute.LOGIN, login);
+                    session.setAttribute(SessionAttribute.BALANCE, user.get().getWallet().getBalance());
+                    session.setAttribute(SessionAttribute.ROLE, user.get().getRole().getRoleName());
+                    page = PagePath.MAIN;
+                }
+                else {
+                    page = PagePath.SIGN_IN;
+                    request.setAttribute(RequestAttribute.SIGN_IN_ERROR, "Email is not confirmed");
+                }
             } else {
                 page = PagePath.SIGN_IN;
                 request.setAttribute(RequestAttribute.SIGN_IN_ERROR, "Incorrect login or password");

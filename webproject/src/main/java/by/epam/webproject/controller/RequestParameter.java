@@ -8,6 +8,10 @@ public class RequestParameter {
     public static final String EMAIL_PARAMETER = "email";
     public static final String NEW_LOCALE = "newLocale";
     public static final String RACE_ID = "raceId";
+    public static final String BET_SIZE = "betSize";
+    public static final String REFILL_AMOUNT = "refillAmount";
+    public static final String CARD_NUMBER = "cardNumber";
+    public static final String WITHDRAW_AMOUNT = "withdrawAmount";
 
     private RequestParameter(){}
 }

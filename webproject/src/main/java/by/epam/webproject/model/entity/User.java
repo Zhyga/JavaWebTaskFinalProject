@@ -6,7 +6,7 @@ public class User {
     private String login;
     private String password;
     private int amountOfBets;
-    private int isApproved;
+    private boolean isApproved;
     private UserRole role;
     private Wallet wallet;
 
@@ -50,11 +50,11 @@ public class User {
         this.amountOfBets = amountOfBets;
     }
 
-    public int getIsApproved() {
+    public boolean getIsApproved() {
         return isApproved;
     }
 
-    public void setIsApproved(int isApproved) {
+    public void setIsApproved(boolean isApproved) {
         this.isApproved = isApproved;
     }
 
@@ -115,7 +115,7 @@ public class User {
         result = 31 * result + login.hashCode();
         result = 31 * result + password.hashCode();
         result = 31 * result + amountOfBets;
-        result = 31 * result + isApproved;
+        result = 31 * result + (isApproved ? 0 : 1);
         result = 31 * result + role.hashCode();
         result = 31 * result + wallet.hashCode();
         return result;

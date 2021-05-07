@@ -3,7 +3,7 @@ package by.epam.webproject.model.validator;
 public class UserValidator {
     private static final String ID_REGEX = "^[1-9]\\d{0,9}$";
     private static final String LOGIN_REGEX = "^(?=.*[A-Za-z0-9]$)[A-Za-z][\\w.-]{0,19}$";
-    private static final String EMAIL_REGEX = "^[\\w]{3,13}@(gmail|yandex|tut|mail)\\.(com|ru|by)$";
+    private static final String EMAIL_REGEX = "^[\\w\\.]{3,13}@(gmail|yandex|tut|mail)\\.(com|ru|by)$";
     private static final String PASSWORD_REGEX = "^[\\w]{3,20}$";
 
     public static boolean isIdCorrect(String id) {

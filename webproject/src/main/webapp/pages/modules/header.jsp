@@ -17,7 +17,8 @@
                 </button>
             </form>
             <div class="d-flex justify-content-start dropdown">
-                <a class="nav-link dropdown-toggle language-choice" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle language-choice" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <ftm:message key="header.language"/>
                 </a>
@@ -36,16 +37,22 @@
             <c:when test="${role.equals('admin')}">
                 <div class="d-flex flex-row justify-content-end align-items-center pr-0">
                     <form action="controller" method="post" class="my-auto">
-                        <button class="btn btn-outline-primary mx-1" type="submit" name="command" value="to_admin_users">
+                        <button class="btn btn-outline-primary mx-1" type="submit" name="command"
+                                value="to_admin_users">
                             <ftm:message key="profile.adminUsers"/>
                         </button>
                     </form>
                     <form action="controller" method="post" class="my-auto">
-                        <button class="btn btn-outline-primary mx-1" type="submit" name="command" value="to_admin_races">
+                        <button class="btn btn-outline-primary mx-1" type="submit" name="command"
+                                value="to_admin_races">
                             <ftm:message key="profile.adminRaces"/>
                         </button>
                     </form>
-                    <a href="#" class="deposit mx-1"><ftm:message key="header.balance"/>${balance}</a>
+                    <form action="controller" method="post"  class="my-auto">
+                        <button type="submit" name="command" value="to_add_balance" class="deposit mx-1 btn btn-link">
+                            <ftm:message key="header.balance"/>${balance}
+                        </button>
+                    </form>
                     <form action="controller" method="post" class="my-auto">
                         <button class="btn btn-outline-primary mx-1" type="submit" name="command" value="to_profile">
                             <ftm:message key="header.profile"/>
@@ -55,7 +62,11 @@
             </c:when>
             <c:when test="${role.equals('user')}">
                 <div class="d-flex flex-row justify-content-end align-items-center pr-0">
-                    <a href="#" class="deposit mx-1"><ftm:message key="header.balance"/>${balance}</a>
+                    <form action="controller" method="post"  class="my-auto">
+                        <button type="submit" name="command" value="to_add_balance" class="deposit mx-1 btn btn-link">
+                            <ftm:message key="header.balance"/>${balance}
+                        </button>
+                    </form>
                     <form action="controller" method="post" class="my-auto">
                         <button class="btn btn-outline-primary mx-1" type="submit" name="command" value="to_profile">
                             <ftm:message key="header.profile"/>

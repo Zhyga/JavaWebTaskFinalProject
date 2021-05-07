@@ -7,6 +7,7 @@ import by.epam.webproject.model.dao.impl.BetInfoDaoImpl;
 import by.epam.webproject.model.entity.BetInfo;
 import by.epam.webproject.model.service.BetInfoService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class BetInfoServiceImpl implements BetInfoService {
@@ -23,8 +24,16 @@ public class BetInfoServiceImpl implements BetInfoService {
     }
 
     @Override
-    public boolean addBetInfo(double prize, double betAmount, double multiplier, int userId, int betId) throws ServiceException {//todo
-        return false;
+    public boolean addBetInfo(double betAmount, double multiplier, LocalDateTime date, String details, int userId, int betId) throws ServiceException {
+        boolean isAdded;
+        try {
+            double prize = betAmount * multiplier;
+            betInfoDao.add(prize, betAmount, multiplier, date, details, userId, betId);
+            isAdded = true;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return isAdded;
     }
 
     @Override

@@ -4,6 +4,8 @@ public class Wallet {
     private Integer walletId;
     private double balance;
 
+    public Wallet(){}
+
     public Wallet(Integer walletId, double balance){
         this.walletId = walletId;
         this.balance = balance;

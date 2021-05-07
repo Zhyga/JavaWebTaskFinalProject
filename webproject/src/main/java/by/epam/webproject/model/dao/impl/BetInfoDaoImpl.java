@@ -24,8 +24,8 @@ public class BetInfoDaoImpl implements BetInfoDao {
             "bet_info.bet_id,bet_info.date,bet_details " +
             "FROM bet_info INNER JOIN users ON bet_info.user_id = users.user_id " +
             "WHERE users.login LIKE ?";
-    private static final String ADD = "INSERT INTO bet_info (prize,bet_amount,multiplier,bet_status,user_id,bet_id) " +
-            "VALUES (?,?,?,?,?)";
+    private static final String ADD = "INSERT INTO bet_info (prize,bet_amount,multiplier,bet_info.date,bet_details,user_id,bet_id) " +
+            "VALUES (?,?,?,?,?,?,?)";
     private static final String UPDATE = "UPDATE bet_info SET bet_status = ? WHERE bet_info_id = ?";
 
     private BetInfoDaoImpl() {
@@ -52,15 +52,17 @@ public class BetInfoDaoImpl implements BetInfoDao {
     }
 
     @Override
-    public boolean add(double prize, double betAmount, double multiplier, int userId, int betId) throws DaoException {//todo test
+    public boolean add(double prize, double betAmount, double multiplier,LocalDateTime date,String details, int userId, int betId) throws DaoException {
         boolean isAdded;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD);) {
             statement.setDouble(1, prize);
             statement.setDouble(2, betAmount);
             statement.setDouble(3, multiplier);
-            statement.setInt(4, userId);
-            statement.setInt(5, betId);
+            statement.setString(4, String.valueOf(date));
+            statement.setString(5, details);
+            statement.setInt(6, userId);
+            statement.setInt(7, betId);
             statement.executeUpdate();
             isAdded = true;
         } catch (SQLException e) {

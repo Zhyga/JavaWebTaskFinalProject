@@ -13,7 +13,7 @@ function timer(){
         minutes = minutes%60;
         var seconds = Math.floor((date.getTime() - now.getTime())/(1000));
         seconds = seconds%60;
-        var daysLeft = Days + (window.navigator.language !== "en_US" ? ' дней' : ' days');
+        var daysLeft = Days + ' days';
         var hoursLeft = [hours,
             (minutes < 10 ? "0" + minutes : minutes),
             (seconds < 10 ? "0" + seconds : seconds)].join(':');
@@ -31,7 +31,23 @@ $(document).ready(function() {
             method: 'post',
             data: {command: 'to_bet_page', raceId: race},
             success: function (data){
+                document.location.href = "http://localhost:8080/controller?command=to_bet_page&raceId=" + race;
+                //document.open
+                //document.write(data)
             }
         });
     });
 });
+
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabContent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tabLink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+}

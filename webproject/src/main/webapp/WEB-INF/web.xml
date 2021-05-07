@@ -19,11 +19,11 @@
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
     <error-page>
-        <error-code>404</error-code>
-        <location>/pages/error.jsp</location>
+        <error-code>403</error-code>
+        <location>/pages/errors/403.jsp</location>
     </error-page>
     <error-page>
-        <exception-type>by.epam.webproject.exception.ServiceException</exception-type>
-        <location>/pages/error.jsp</location>
+        <error-code>404</error-code>
+        <location>/pages/errors/404.jsp</location>
     </error-page>
 </web-app>

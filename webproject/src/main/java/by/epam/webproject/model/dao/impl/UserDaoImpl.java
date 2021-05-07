@@ -34,6 +34,7 @@ public class UserDaoImpl implements UserDao {
             + "WHERE login LIKE ?";
     private static final String CHECK_BY_LOGIN = "SELECT password FROM users WHERE login LIKE ?";
     private static final String UPDATE_ROLE = "UPDATE users SET role_id = ? WHERE login = ?";
+    private static final String UPDATE_IS_APPROVED = "UPDATE users SET is_approved = 1 WHERE login = ?";
 
 
     private UserDaoImpl() {
@@ -97,7 +98,7 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(FIND_BY_LOGIN);) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 user = Optional.of(createUserFromResultSet(resultSet));
             }
         } catch (SQLException e) {
@@ -113,7 +114,7 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement statement = connection.prepareStatement(CHECK_BY_LOGIN);) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 password = Optional.of(resultSet.getString(ColumnName.PASSWORD));
             }
         } catch (SQLException e) {
@@ -127,7 +128,6 @@ public class UserDaoImpl implements UserDao {
         boolean isAdded;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD);) {
-            walletDao.add(wallet);//fixme
             statement.setString(1, email);
             statement.setString(2, login);
             statement.setString(3, password);
@@ -150,9 +150,23 @@ public class UserDaoImpl implements UserDao {
             statement.executeUpdate();
             isChanged = true;
         } catch (SQLException e) {
-            throw new DaoException("Error while creating user: " + login, e);
+            throw new DaoException("Error while changing role: " + login, e);
         }
         return isChanged;
+    }
+
+    @Override
+    public boolean confirmEmail(String login) throws DaoException {
+        boolean isConfirmed;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_IS_APPROVED);) {
+            statement.setString(1, login);
+            statement.executeUpdate();
+            isConfirmed = true;
+        } catch (SQLException e) {
+            throw new DaoException("Error while confirming email: " + login, e);
+        }
+        return isConfirmed;
     }
 
     private User createUserFromResultSet(ResultSet resultSet) throws SQLException {
@@ -162,7 +176,7 @@ public class UserDaoImpl implements UserDao {
         String email = resultSet.getString(ColumnName.EMAIL);
         String password = resultSet.getString(ColumnName.PASSWORD);
         int amountOfBets = resultSet.getInt(ColumnName.AMOUNT_OF_BETS);
-        int isApproved = resultSet.getInt(ColumnName.IS_APPROVED);
+        boolean isApproved = resultSet.getBoolean(ColumnName.IS_APPROVED);
         String role_name = resultSet.getString(ColumnName.ROLE_NAME);
         int wallet_id = resultSet.getInt(ColumnName.WALLET_ID);
         double balance = resultSet.getDouble(ColumnName.BALANCE);
