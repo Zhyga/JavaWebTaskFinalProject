@@ -19,13 +19,13 @@
         <div class="form-group">
             <label for="inputLogin"><ftm:message key="login.login"/></label>
             <input type="text" name="login" class="form-control" id="inputLogin" aria-describedby="loginHelp"
-                   placeholder="<ftm:message key="login.loginHelper"/>">
+                   placeholder="<ftm:message key="login.loginHelper"/>" pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][\w.-]{0,19}$">
             <small id="loginHelp" class="form-text text-muted"><ftm:message key="login.loginHelper"/></small>
         </div>
         <div class="form-group">
             <label for="inputPassword"><ftm:message key="login.password"/></label>
             <input type="password" name="password" class="form-control" id="inputPassword"
-                   placeholder="<ftm:message key="login.password"/>">
+                   placeholder="<ftm:message key="login.password"/>" pattern="^[\w]{3,20}$">
         </div>
         <label style="color: red">${errorLoginPasMessage}</label>
         <br/>

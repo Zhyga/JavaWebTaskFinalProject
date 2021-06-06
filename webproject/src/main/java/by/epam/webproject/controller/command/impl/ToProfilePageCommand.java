@@ -14,6 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The {@code ToProfilePageCommand} class represents to profile page command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class ToProfilePageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final BetInfoServiceImpl betInfoService = new BetInfoServiceImpl();

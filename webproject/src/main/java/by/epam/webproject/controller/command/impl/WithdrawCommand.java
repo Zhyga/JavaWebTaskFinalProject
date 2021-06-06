@@ -13,6 +13,7 @@ import by.epam.webproject.model.service.WalletService;
 import by.epam.webproject.model.service.impl.CardServiceImpl;
 import by.epam.webproject.model.service.impl.UserServiceImpl;
 import by.epam.webproject.model.service.impl.WalletServiceImpl;
+import by.epam.webproject.model.validator.CardValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The {@code WithdrawCommand} class represents withdraw command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class WithdrawCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final WalletService walletService = new WalletServiceImpl();
@@ -27,32 +34,46 @@ public class WithdrawCommand implements Command {
     private final UserService userService = new UserServiceImpl();
 
     @Override
-    public String execute(HttpServletRequest request) {//todo refactor
+    public String execute(HttpServletRequest request) {
+        String page;
         HttpSession session = request.getSession();
         String withdraw = request.getParameter(RequestParameter.WITHDRAW_AMOUNT);
-        String cardNumber = request.getParameter(RequestParameter.CARD_NUMBER);
-        String login = (String) session.getAttribute(SessionAttribute.LOGIN);
-        try {
-            Optional<User> userOptional = userService.findUserByLogin(login);
-            if (userOptional.isPresent()) {
-                User user = userOptional.get();
-                int walletId = user.getWallet().getWalletId();
-                double balanceToWithdraw = Double.parseDouble(withdraw);
-                if (cardService.isCardFinded(cardNumber,0)) {//todo split in to 2 functions. 1 to find 2 to check balance
-                    double currentBalance = (Double) session.getAttribute(SessionAttribute.BALANCE);
-                    double newBalance = currentBalance - balanceToWithdraw;
-                    if (walletService.changeBalance(walletId, newBalance)) {
-                        cardService.update(cardNumber,currentBalance+balanceToWithdraw);
-                        session.setAttribute(SessionAttribute.BALANCE, newBalance);
+        if (!CardValidator.isAmountCorrect(withdraw)) {
+            request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Incorrect deposit sum");
+            page = PagePath.DEPOSIT;
+        } else {
+            String cardNumber = request.getParameter(RequestParameter.CARD_NUMBER);
+            String login = (String) session.getAttribute(SessionAttribute.LOGIN);
+            try {
+                Optional<User> userOptional = userService.findUserByLogin(login);
+                if (userOptional.isEmpty()) {
+                    page = PagePath.HOME;
+                } else {
+                    User user = userOptional.get();
+                    int walletId = user.getWallet().getWalletId();
+                    double balanceToWithdraw = Double.parseDouble(withdraw);
+                    if (cardService.isCardFinded(cardNumber, Integer.MIN_VALUE)) {
+                        double currentBalance = (Double) session.getAttribute(SessionAttribute.BALANCE);
+                        double newBalance = currentBalance - balanceToWithdraw;
+                        if (walletService.changeBalance(walletId, newBalance) &&
+                                cardService.update(cardNumber, currentBalance + balanceToWithdraw)) {
+                            session.setAttribute(SessionAttribute.BALANCE, newBalance);
+                            request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Deposit successfully");
+                            page = PagePath.DEPOSIT;
+                        } else {
+                            request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Error while changing balance");
+                            page = PagePath.DEPOSIT;
+                        }
+                    } else {
+                        request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "incorrect card number");
+                        page = PagePath.DEPOSIT;
                     }
                 }
-                else {
-                    request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "incorrect card number");
-                }
+            } catch (ServiceException e) {
+                logger.error("Error while updating users balance", e);
+                page = PagePath.HOME;
             }
-        } catch (ServiceException e) {
-            logger.error("Error while updating users balance",e);
         }
-        return PagePath.MAIN;
+        return page;
     }
 }

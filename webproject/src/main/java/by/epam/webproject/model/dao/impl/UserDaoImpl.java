@@ -17,9 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The {@code UserDaoImpl} class represents user dao implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class UserDaoImpl implements UserDao {
     private static final UserDaoImpl instance = new UserDaoImpl();
-    private static final WalletDao walletDao = WalletDaoImpl.getInstance();
     private static final String ADD = "INSERT INTO users (email,login,password,wallet_id) VALUES (?,?,?,?)";
     private static final String FIND_ALL = "SELECT user_id,email,login,password,amount_of_bets,is_approved,users.role_id," +
             "users.wallet_id,role_name,balance FROM users INNER JOIN roles ON users.role_id = roles.role_id " +
@@ -32,14 +37,24 @@ public class UserDaoImpl implements UserDao {
             "role_name,users.wallet_id,balance FROM users INNER JOIN roles ON users.role_id = roles.role_id " +
             "INNER JOIN wallets ON users.wallet_id = wallets.wallet_id "
             + "WHERE login LIKE ?";
+    private static final String FIND_BY_ID = "SELECT user_id,email,login,password,amount_of_bets,is_approved,users.role_id," +
+            "role_name,users.wallet_id,balance FROM users INNER JOIN roles ON users.role_id = roles.role_id " +
+            "INNER JOIN wallets ON users.wallet_id = wallets.wallet_id "
+            + "WHERE user_id LIKE ?";
     private static final String CHECK_BY_LOGIN = "SELECT password FROM users WHERE login LIKE ?";
     private static final String UPDATE_ROLE = "UPDATE users SET role_id = ? WHERE login = ?";
     private static final String UPDATE_IS_APPROVED = "UPDATE users SET is_approved = 1 WHERE login = ?";
+    private static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?";
 
 
     private UserDaoImpl() {
     }
 
+    /**
+     * Gets instance
+     *
+     * @return the instance
+     */
     public static UserDao getInstance() {
         return instance;
     }
@@ -65,6 +80,22 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_BY_EMAIL);) {
             statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                user = Optional.of(createUserFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding all users", e);
+        }
+        return user;
+    }
+
+    @Override
+    public Optional<User> findUserById(int id) throws DaoException {
+        Optional<User> user = Optional.empty();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID);) {
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 user = Optional.of(createUserFromResultSet(resultSet));
@@ -167,6 +198,21 @@ public class UserDaoImpl implements UserDao {
             throw new DaoException("Error while confirming email: " + login, e);
         }
         return isConfirmed;
+    }
+
+    @Override
+    public boolean changePassword(String newPassword, String login) throws DaoException {
+        boolean isChanged;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_PASSWORD);) {
+            statement.setString(1, newPassword);
+            statement.setString(2, login);
+            statement.executeUpdate();
+            isChanged = true;
+        } catch (SQLException e) {
+            throw new DaoException("Error while changing password", e);
+        }
+        return isChanged;
     }
 
     private User createUserFromResultSet(ResultSet resultSet) throws SQLException {

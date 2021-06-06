@@ -51,3 +51,12 @@ function openTab(evt, tabName) {
     }
     document.getElementById(tabName).style.display = "block";
 }
+
+function ansValidation(ev) {
+    const password = document.getElementById("inputPassword").value
+    const confirmedPassword = document.getElementById("inputConfirmPassword").value
+    if (password !== confirmedPassword) {
+        ev.preventDefault();
+        window.alert("Passwords do not match!");
+    }
+}

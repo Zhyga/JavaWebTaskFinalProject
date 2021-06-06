@@ -15,6 +15,12 @@ import by.epam.webproject.util.PasswordEncryptor;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The {@code UserServiceImpl} class represents user service implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class UserServiceImpl implements UserService {
     private final UserDao userDao = UserDaoImpl.getInstance();
     private final WalletDao walletDao = WalletDaoImpl.getInstance();
@@ -42,6 +48,16 @@ public class UserServiceImpl implements UserService {
         Optional<User> user;
         try {
             user = userDao.findUserByLogin(email);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return user;
+    }
+
+    public Optional<User> findUserById(int id) throws ServiceException {
+        Optional<User> user;
+        try {
+            user = userDao.findUserById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -99,6 +115,8 @@ public class UserServiceImpl implements UserService {
         return isConfirmed;
     }
 
+
+
     public boolean createUser(String email, String login, String password) throws ServiceException {
         boolean isUserCreated = false;
         try {
@@ -120,5 +138,23 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
         return isUserCreated;
+    }
+
+    @Override
+    public boolean changePassword(String newPassword, String login) throws ServiceException {
+        boolean isChanged = false;
+        try {
+            if(UserValidator.isPasswordCorrect(newPassword)) {
+                Optional<String> encNewPassword = PasswordEncryptor.encryptPassword(newPassword);
+                if(encNewPassword.isPresent()) {
+                    if (userDao.changePassword(encNewPassword.get(), login)) {
+                        isChanged = true;
+                    }
+                }
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return isChanged;
     }
 }

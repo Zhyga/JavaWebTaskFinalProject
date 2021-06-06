@@ -4,6 +4,12 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+/**
+ * The {@code EncodingFilter} class represents encoding filter
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = {"/*"})
 public class EncodingFilter implements Filter {
     private static final String ENCODING = "UTF-8";

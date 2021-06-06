@@ -11,13 +11,22 @@ import java.util.Queue;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
+/**
+ * The {@code ConnectionPool} class represents connection pool
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public enum ConnectionPool {
+    /**
+     * Instance connection pool.
+     */
     INSTANCE;
 
     private final Logger logger = LogManager.getLogger();
     private static final int POOL_SIZE = 8;
     private final BlockingDeque<ProxyConnection> freeConnections;
-    private final Queue<ProxyConnection> givenAwayConnections;
+    private final BlockingDeque<ProxyConnection> givenAwayConnections;
 
 
     ConnectionPool() {
@@ -29,7 +38,7 @@ public enum ConnectionPool {
             String password = databaseConfig.getPassword();
             Class.forName(driverName);
             freeConnections = new LinkedBlockingDeque<>(POOL_SIZE);
-            givenAwayConnections = new ArrayDeque<>();
+            givenAwayConnections = new LinkedBlockingDeque<>();
             for (int i = 0; i < POOL_SIZE; i++) {
                 Connection connection = DriverManager.getConnection(url, username, password);
                 freeConnections.offer(new ProxyConnection(connection));
@@ -40,17 +49,27 @@ public enum ConnectionPool {
         }
     }
 
+    /**
+     * Gets connection
+     *
+     * @return theconnection
+     */
     public Connection getConnection() {
         ProxyConnection connection = null;
         try {
             connection = freeConnections.take();
-            givenAwayConnections.offer(connection);
+            givenAwayConnections.put(connection);
         } catch (InterruptedException e) {
             logger.warn("Thread was interrupted", e);
         }
         return connection;
     }
 
+    /**
+     * Releases connection
+     *
+     * @param connection the connection
+     */
     public void releaseConnection(Connection connection) {
         if (connection instanceof ProxyConnection) {
             givenAwayConnections.remove(connection);
@@ -60,6 +79,9 @@ public enum ConnectionPool {
         }
     }
 
+    /**
+     * Destroy pool
+     */
     public void destroyPool() {
         for (int i = 0; i < POOL_SIZE; i++) {
             try {
@@ -71,12 +93,15 @@ public enum ConnectionPool {
         deregisterDriver();
     }
 
+    /**
+     * Deregister driver
+     */
     private void deregisterDriver() {
         DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException e) {
-                logger.error("Driver wasnt deregister");
+                logger.error("Driver wasn't deregister");
             }
         });
     }

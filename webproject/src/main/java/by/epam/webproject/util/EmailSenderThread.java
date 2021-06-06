@@ -9,6 +9,12 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * The {@code EmailSenderThread} class represents email sender thread
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class EmailSenderThread implements Runnable{
     private MimeMessage message;
     private final String sendToEmail;
@@ -20,6 +26,14 @@ public class EmailSenderThread implements Runnable{
     private static final String MAIL_USER_NAME = "mail.user.name";
     private static final String MAIL_USER_PASSWORD = "mail.user.password";
 
+    /**
+     * Instantiates a new Email sender thread.
+     *
+     * @param sendToEmail the send to email
+     * @param mailSubject the mail subject
+     * @param mailText    the mail text
+     * @param properties  the properties
+     */
     public EmailSenderThread(String sendToEmail, String mailSubject, String mailText, Properties properties) {
         this.sendToEmail = sendToEmail;
         this.mailSubject = mailSubject;

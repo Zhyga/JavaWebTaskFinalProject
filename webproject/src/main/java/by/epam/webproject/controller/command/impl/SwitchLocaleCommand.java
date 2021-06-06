@@ -7,6 +7,12 @@ import by.epam.webproject.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The {@code SwitchLocaleCommand} class represents switch locale command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class SwitchLocaleCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {

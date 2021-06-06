@@ -19,6 +19,12 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The {@code SignInCommand} class represents sign in command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class SignInCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final UserService userService = new UserServiceImpl();

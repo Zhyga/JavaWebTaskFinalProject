@@ -36,8 +36,16 @@
             <input type="time" name="raceTime" required>
         </p>
         <p>
+            <select class="form-select" multiple name="raceParticipants">
+                <c:forEach var="participant" items="${raceParticipants}" varStatus="status">
+                    <option><c:out value="${participant.horse}"/></option>
+                </c:forEach>
+            </select>
+        </p>
+        <p>
             <button type="submit" name="command" value="create_race">Add race</button>
         </p>
+
     </form>
     <label style="color: red">${errorRaceCreated}</label>
 </div>

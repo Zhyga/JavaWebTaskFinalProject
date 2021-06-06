@@ -12,6 +12,12 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The {@code ConfirmEmailCommand} class represents confirm email command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class ConfirmEmailCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final UserService userService = new UserServiceImpl();

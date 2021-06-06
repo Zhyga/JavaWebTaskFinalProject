@@ -17,6 +17,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The {@code RoleAccessFilter} class represents role access filter
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = "/controller")
 public class RoleAccessFilter implements Filter {
     private static final Logger logger = LogManager.getLogger();

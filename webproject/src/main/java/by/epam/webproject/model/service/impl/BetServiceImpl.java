@@ -8,7 +8,14 @@ import by.epam.webproject.model.entity.Bet;
 import by.epam.webproject.model.service.BetService;
 
 import java.util.List;
+import java.util.Optional;
 
+/**
+ * The {@code BetServiceImpl} class represents bet service implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class BetServiceImpl implements BetService {
     private static final BetDao betDao = BetDaoImpl.getInstance();
 
@@ -20,5 +27,16 @@ public class BetServiceImpl implements BetService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public Optional<Bet> findById(int betId) throws ServiceException {
+        Optional<Bet> betOptional;
+        try {
+            betOptional = betDao.findById(betId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return betOptional;
     }
 }

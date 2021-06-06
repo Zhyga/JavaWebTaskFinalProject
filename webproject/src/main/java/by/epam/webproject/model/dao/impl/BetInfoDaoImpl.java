@@ -18,28 +18,58 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code BetInfoDaoImpl} class represents bet info dao implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class BetInfoDaoImpl implements BetInfoDao {
     private static final BetInfoDaoImpl instance = new BetInfoDaoImpl();
-    private static final String FIND_ALL = "SELECT bet_info_id,prize,bet_amount,multiplier,bet_status,bet_info.user_id," +
+    private static final String FIND_ALL_BY_USERS = "SELECT bet_info_id,prize,bet_amount,multiplier,bet_status,bet_info.user_id," +
             "bet_info.bet_id,bet_info.date,bet_details " +
             "FROM bet_info INNER JOIN users ON bet_info.user_id = users.user_id " +
             "WHERE users.login LIKE ?";
+    private static final String FIND_ALL_BY_BETID = "SELECT bet_info_id,prize,bet_amount,multiplier,bet_status,bet_info.user_id," +
+            "bet_info.bet_id,bet_info.date,bet_details " +
+            "FROM bet_info WHERE bet_info.bet_id LIKE ?";
     private static final String ADD = "INSERT INTO bet_info (prize,bet_amount,multiplier,bet_info.date,bet_details,user_id,bet_id) " +
             "VALUES (?,?,?,?,?,?,?)";
-    private static final String UPDATE = "UPDATE bet_info SET bet_status = ? WHERE bet_info_id = ?";
+    private static final String UPDATE = "UPDATE bet_info SET bet_status = ? WHERE bet_id = ?";
 
     private BetInfoDaoImpl() {
     }
 
+    /**
+     * Gets instance
+     *
+     * @return the instance
+     */
     public static BetInfoDaoImpl getInstance() {
         return instance;
+    }
+
+    @Override
+    public List<BetInfo> findAllBetBets(int betId) throws DaoException {
+        List<BetInfo> betInfos = new ArrayList<>();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_BETID);) {
+            statement.setInt(1,betId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                betInfos.add(createBetInfoFromResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding bet history", e);
+        }
+        return betInfos;
     }
 
     @Override
     public List<BetInfo> findAllUserBets(String login) throws DaoException {
         List<BetInfo> betInfos = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(FIND_ALL);) {
+             PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_USERS);) {
             statement.setString(1,login);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -72,11 +102,12 @@ public class BetInfoDaoImpl implements BetInfoDao {
     }
 
     @Override
-    public boolean update(int betInfoId) throws DaoException {//todo test
+    public boolean update(int betId,String status) throws DaoException {
         boolean isUpdated;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE);) {
-            statement.setInt(1, betInfoId);
+            statement.setString(1, status);
+            statement.setInt(2, betId);
             statement.executeUpdate();
             isUpdated = true;
         } catch (SQLException e) {

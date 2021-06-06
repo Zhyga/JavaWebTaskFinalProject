@@ -39,15 +39,36 @@
                     <form action="controller" method="post" class="my-auto">
                         <button class="btn btn-outline-primary mx-1" type="submit" name="command"
                                 value="to_admin_users">
-                            <ftm:message key="profile.adminUsers"/>
+                            <ftm:message key="header.adminUsers"/>
                         </button>
                     </form>
                     <form action="controller" method="post" class="my-auto">
                         <button class="btn btn-outline-primary mx-1" type="submit" name="command"
                                 value="to_admin_races">
-                            <ftm:message key="profile.adminRaces"/>
+                            <ftm:message key="header.adminRaces"/>
                         </button>
                     </form>
+                    <form action="controller" method="post"  class="my-auto">
+                        <button type="submit" name="command" value="to_add_balance" class="deposit mx-1 btn btn-link">
+                            <ftm:message key="header.balance"/>${balance}
+                        </button>
+                    </form>
+                    <form action="controller" method="post" class="my-auto">
+                        <button class="btn btn-outline-primary mx-1" type="submit" name="command" value="to_profile">
+                            <ftm:message key="header.profile"/>
+                        </button>
+                    </form>
+                </div>
+            </c:when>
+            <c:when test="${role.equals('bookmaker')}">
+                <div class="d-flex flex-row justify-content-end align-items-center pr-0">
+                    <form action="controller" method="post" class="my-auto">
+                        <button class="btn btn-outline-primary mx-1" type="submit" name="command"
+                                value="to_bookmaker_races">
+                            <ftm:message key="header.adminRaces"/>
+                        </button>
+                    </form>
+
                     <form action="controller" method="post"  class="my-auto">
                         <button type="submit" name="command" value="to_add_balance" class="deposit mx-1 btn btn-link">
                             <ftm:message key="header.balance"/>${balance}

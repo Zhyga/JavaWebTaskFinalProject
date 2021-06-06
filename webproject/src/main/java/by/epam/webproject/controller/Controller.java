@@ -10,6 +10,12 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+/**
+ * The {@code Controller} class represents controller
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger();
 

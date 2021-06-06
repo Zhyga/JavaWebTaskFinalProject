@@ -11,15 +11,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code RaceDateDaoImpl} class represents race date dao implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class RaceDateDaoImpl implements RaceDateDao {
     private final static RaceDateDaoImpl instance = new RaceDateDaoImpl();
-    private static final String ADD = "INSERT INTO race_data (race_data.date) VALUES (?) ";
+    private static final String ADD = "INSERT INTO race_data (race_data.date,participant_id) VALUES (?,?) ";
     private static final String FIND_ALL_PARTICIPANTS = "SELECT race_data.date,race_data.participant_id,horse,weight,jockey FROM race_data " +
             "INNER JOIN participants ON race_data.participant_id = participants.participant_id WHERE race_data.date = ?";
 
     private RaceDateDaoImpl() {
     }
 
+    /**
+     * Gets instance
+     *
+     * @return the instance
+     */
     public static RaceDateDaoImpl getInstance() {
         return instance;
     }
@@ -29,11 +40,14 @@ public class RaceDateDaoImpl implements RaceDateDao {
         boolean isAdded;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD, Statement.RETURN_GENERATED_KEYS);) {
-            statement.setString(1, String.valueOf(raceData.getDate()));
-            statement.executeUpdate();
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                raceData.setRaceDataId(generatedKeys.getInt(1));
+            for(int i = 0; i < raceData.getParticipantsId().size(); i++) {
+                statement.setString(1, String.valueOf(raceData.getDate()));
+                statement.setInt(2,raceData.getParticipantsId().get(i).getParticipantID());
+                statement.executeUpdate();
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    raceData.setRaceDataId(generatedKeys.getInt(1));
+                }
             }
             isAdded = true;
         } catch (SQLException e) {
@@ -43,7 +57,7 @@ public class RaceDateDaoImpl implements RaceDateDao {
     }
 
     @Override
-    public List<Participant> findAllParticipants(String raceDate) throws DaoException {//todo refactor
+    public List<Participant> findAllParticipantsByDate(String raceDate) throws DaoException {
         List<Participant> participants = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(FIND_ALL_PARTICIPANTS);) {

@@ -10,6 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * The {@code CardDaoImpl} class represents card dao implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class CardDaoImpl implements CardDao {
     private static final CardDaoImpl instance = new CardDaoImpl();
     private static final String FIND_BY_CARD_NUMBER = "SELECT * FROM payment_cards WHERE card_number LIKE ? " +
@@ -19,6 +25,11 @@ public class CardDaoImpl implements CardDao {
     private CardDaoImpl() {
     }
 
+    /**
+     * Gets instance
+     *
+     * @return the instance
+     */
     public static CardDaoImpl getInstance() {
         return instance;
     }

@@ -17,6 +17,12 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The {@code ToBetPageCommand} class represents to bet page command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class ToBetPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final BetServiceImpl betService = new BetServiceImpl();
@@ -34,12 +40,7 @@ public class ToBetPageCommand implements Command {
                 Race race = raceOptional.get();
                 session.setAttribute(SessionAttribute.CURRENT_RACE,race);
                 List<Bet> bets = betService.findAllRaceBets(raceId);
-                request.setAttribute(RequestAttribute.RACE_BETS,bets);
-                request.setAttribute(RequestAttribute.RACE_PARTICIPANTS,race.getRaceData().getParticipantsId());
-                request.setAttribute(RequestAttribute.RACE_DETAILS,race.getDetails());
-                request.setAttribute(RequestAttribute.RACE_ROUNDS,race.getRounds());
-                request.setAttribute(RequestAttribute.RACE_TIME,race.getRaceData().getDate());
-                request.setAttribute(RequestAttribute.RACE_TITLE,race.getTitle());
+                session.setAttribute(SessionAttribute.RACE_BET_LIST,bets);
                 page = PagePath.RACE;
             } catch (ServiceException e) {
                 logger.error("Error while loading race page", e);

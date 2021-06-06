@@ -19,7 +19,7 @@
         <div class="form-group">
             <label for="inputEmail"><ftm:message key="login.email"/></label>
             <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
-                   placeholder="Enter email" required>
+                   placeholder="Enter email" required pattern="^[\w\.]{3,13}@(gmail|yandex|tut|mail)\.(com|ru|by)$">
             <small id="emailHelp" class="form-text text-muted"><ftm:message key="login.emailHelper"/></small>
         </div>
         <div class="form-group">
@@ -31,16 +31,28 @@
         </div>
         <div class="form-group">
             <label for="inputPassword"><ftm:message key="login.password"/></label>
-            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="<ftm:message key="login.password"/>" required>
+            <input type="password" name="password" class="form-control" id="inputPassword"
+                   placeholder="<ftm:message key="login.password"/>" required pattern="^[\w]{3,20}$">
+        </div>
+        <div class="form-group">
+            <label for="inputConfirmPassword"><ftm:message key="login.password"/></label>
+            <input type="password" name="confirmedPassword" class="form-control" id="inputConfirmPassword"
+                   placeholder="<ftm:message key="login.password"/>" required pattern="^[\w]{3,20}$">
         </div>
         <label style="color: red">${errorSignUpMessage}</label>
         <br/>
-        <button type="submit" class="btn btn-primary"><ftm:message key="login.register"/></button>
+        <button type="submit" class="btn btn-primary" id="signUpButton"><ftm:message key="login.register"/></button>
         <input type="hidden" name="command" value="sign_up">
     </form>
 </div>
 <jsp:include page="modules/footer.jsp"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/project.js"></script>
+<script>
+    document.getElementById('signUpButton').addEventListener(
+        'click', ansValidation, false
+    );
+</script>
 </body>
 </html>

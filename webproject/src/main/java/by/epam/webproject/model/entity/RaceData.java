@@ -3,37 +3,102 @@ package by.epam.webproject.model.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * The {@code RaceData} class represents race data entity
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class RaceData {
+    /**
+     *  The value is used for race data id storage.
+     */
     private int raceDataId;
+
+    /**
+     *  The value is used for date storage.
+     */
     private LocalDateTime date;
+
+    /**
+     *  The value is used for participants id storage.
+     */
     private List<Participant> participantsId;
 
+    /**
+     * Instantiates a new Race
+     *
+     * @param date the date
+     * @param participants the participants
+     */
+    public RaceData(LocalDateTime date,List<Participant> participants){
+        this.date = date;
+        this.participantsId = participants;
+    }
+
+    /**
+     * Instantiates a new Race
+     *
+     * @param raceDataId the race data id
+     * @param date the date
+     * @param participants the participants
+     */
     public RaceData(int raceDataId,LocalDateTime date,List<Participant> participants){
         this.raceDataId = raceDataId;
         this.date = date;
         this.participantsId = participants;
     }
 
+    /**
+     * Gets race data id
+     *
+     * @return the race data id
+     */
     public int getRaceDataId() {
         return raceDataId;
     }
 
+    /**
+     * Sets race data id
+     *
+     * @param raceDataId the race data id
+     */
     public void setRaceDataId(int raceDataId) {
         this.raceDataId = raceDataId;
     }
 
+    /**
+     * Gets date
+     *
+     * @return the date
+     */
     public LocalDateTime getDate() {
         return date;
     }
 
+    /**
+     * Sets date
+     *
+     * @param date the date
+     */
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
+    /**
+     * Gets participants id
+     *
+     * @return the participants id
+     */
     public List<Participant> getParticipantsId() {
         return participantsId;
     }
 
+    /**
+     * Sets participants id
+     *
+     * @param participantsId the participants id
+     */
     public void setParticipantsId(List<Participant> participantsId) {
         this.participantsId = participantsId;
     }

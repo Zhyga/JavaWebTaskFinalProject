@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="container" style="width: 980px; margin-left: auto; margin-right: auto">
-    <footer class="bg-light text-center text-lg-start fixed-bottom" style="width: 980px; margin-left: auto; margin-right: auto">
+    <footer class="bg-light text-center text-lg-start" style="width: 980px; margin-left: auto; margin-right: auto">
         <div class="container p-1">
             <div class="row">
                 <div class="mb-4 ml-3 mb-md-0 text-left">

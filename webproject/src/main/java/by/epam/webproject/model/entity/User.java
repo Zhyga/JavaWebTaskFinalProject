@@ -1,75 +1,192 @@
 package by.epam.webproject.model.entity;
 
+/**
+ * The {@code User} class represents user entity
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class User {
+    /**
+     *  The value is used for user id storage.
+     */
     private int userId;
+
+    /**
+     *  The value is used for email storage.
+     */
     private String email;
+
+    /**
+     *  The value is used for loin storage.
+     */
     private String login;
+
+    /**
+     *  The value is used for password storage.
+     */
     private String password;
+
+    /**
+     *  The value is used for amount of bets storage.
+     */
     private int amountOfBets;
+
+    /**
+     *  The value is used for is approved storage.
+     */
     private boolean isApproved;
+
+    /**
+     *  The value is used for role storage.
+     */
     private UserRole role;
+
+    /**
+     *  The value is used for wallet storage.
+     */
     private Wallet wallet;
 
+    /**
+     * Gets user id
+     *
+     * @return the user id
+     */
     public int getUserId() {
         return userId;
     }
 
+    /**
+     * Sets user id
+     *
+     * @param userId the user id
+     */
     public void setUserId(int userId) {
         this.userId = userId;
     }
 
+    /**
+     * Gets email
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets email
+     *
+     * @param email the email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets login
+     *
+     * @return the login
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * Sets login
+     *
+     * @param login the login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     * Gets password
+     *
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Sets password
+     *
+     * @param password the password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Get amount of bets
+     *
+     * @return the amount of bets
+     */
     public int getAmountOfBets() {
         return amountOfBets;
     }
 
+    /**
+     * Set amount of bets
+     *
+     * @param amountOfBets the amount of bets
+     */
     public void setAmountOfBets(int amountOfBets) {
         this.amountOfBets = amountOfBets;
     }
 
+    /**
+     * Gets is approved
+     *
+     * @return the is approved
+     */
     public boolean getIsApproved() {
         return isApproved;
     }
 
+    /**
+     * Sets is approved
+     *
+     * @param isApproved the is approved
+     */
     public void setIsApproved(boolean isApproved) {
         this.isApproved = isApproved;
     }
 
+    /**
+     * Gets role
+     *
+     * @return the role
+     */
     public UserRole getRole() {
         return role;
     }
 
+    /**
+     * Sets role
+     *
+     * @param role the role
+     */
     public void setRole(UserRole role) {
         this.role = role;
     }
 
+    /**
+     * Gets wallet
+     *
+     * @return the wallet
+     */
     public Wallet getWallet() {
         return wallet;
     }
 
+    /**
+     * Sets wallet
+     *
+     * @param wallet the wallet
+     */
     public void setWallet(Wallet wallet) {
         this.wallet = wallet;
     }

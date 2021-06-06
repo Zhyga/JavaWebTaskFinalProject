@@ -10,6 +10,12 @@ import by.epam.webproject.model.pool.ConnectionPool;
 import java.sql.*;
 import java.util.Optional;
 
+/**
+ * The {@code WalletDaoImpl} class represents wallet dao implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class WalletDaoImpl implements WalletDao {
     private static final WalletDaoImpl instance = new WalletDaoImpl();
     private static final String ADD = "INSERT INTO wallets (balance) VALUES (0)";
@@ -19,6 +25,11 @@ public class WalletDaoImpl implements WalletDao {
     private WalletDaoImpl() {
     }
 
+    /**
+     * Gets instance
+     *
+     * @return the instance
+     */
     public static WalletDaoImpl getInstance() {
         return instance;
     }

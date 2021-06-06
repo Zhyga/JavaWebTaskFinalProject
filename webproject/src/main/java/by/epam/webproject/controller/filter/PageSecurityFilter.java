@@ -8,7 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+/**
+ * The {@code PageSecurityFilter} class represents page security filter
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 @WebFilter(urlPatterns = {"/pages/*"})
 public class PageSecurityFilter implements Filter {
     @Override

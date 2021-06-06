@@ -2,6 +2,12 @@ package by.epam.webproject.controller.command;
 
 import by.epam.webproject.controller.command.impl.*;
 
+/**
+ * The {@code CommandType} enum represents command type
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public enum CommandType {
     SIGN_IN{
         {
@@ -21,6 +27,11 @@ public enum CommandType {
     WITHDRAW{
         {
             this.command = new WithdrawCommand();
+        }
+    },
+    CHANGE_PASSWORD{
+        {
+            this.command = new ChangePasswordCommand();
         }
     },
     LOG_OUT{
@@ -58,19 +69,9 @@ public enum CommandType {
             this.command = new PlaceBetCommand();
         }
     },
-    FIND_ALL_USERS{
+    CALCULATE_WINNER{
         {
-            this.command = new FindAllUsersCommand();
-        }
-    },
-    FIND_BY_EMAIL{
-        {
-            this.command = new FindByEmailCommand();
-        }
-    },
-    FIND_ALL_RACES{
-        {
-            this.command = new FindAllRacesCommand();
+            this.command = new CalculateWinnerCommand();
         }
     },
     TO_MAIN{
@@ -81,6 +82,11 @@ public enum CommandType {
     TO_PROFILE{
         {
             this.command = new ToProfilePageCommand();
+        }
+    },
+    TO_CHANGE_PASSWORD{
+        {
+            this.command = new ToChangePasswordPageCommand();
         }
     },
     TO_ADD_BALANCE{
@@ -117,10 +123,20 @@ public enum CommandType {
         {
             this.command = new ToSignInPageCommand();
         }
+    },
+    TO_BOOKMAKER_RACES{
+        {
+            this.command = new ToBookmakerRacesPageCommand();
+        }
     };;
 
     Command command;
 
+    /**
+     * Gets command
+     *
+     * @return the command
+     */
     public Command getCommand(){
         return command;
     }

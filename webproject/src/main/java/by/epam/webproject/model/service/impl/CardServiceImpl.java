@@ -7,6 +7,12 @@ import by.epam.webproject.model.dao.impl.CardDaoImpl;
 import by.epam.webproject.model.service.CardService;
 import by.epam.webproject.model.validator.CardValidator;
 
+/**
+ * The {@code CardServiceImpl} class represents card service implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class CardServiceImpl implements CardService {
     private final CardDao cardDao = CardDaoImpl.getInstance();
 

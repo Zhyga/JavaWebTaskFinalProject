@@ -21,7 +21,7 @@
             <h4><ftm:message key="profile.user"/></h4>
             <h5>${login}</h5>
             <form action="controller" method="post">
-                <button class="btn btn-primary mx-0" type="submit" name="command" value="change_password">
+                <button class="btn btn-primary mx-0" type="submit" name="command" value="to_change_password">
                     <ftm:message key="profile.changePassword"/>
                 </button>
             </form>

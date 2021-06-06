@@ -12,6 +12,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The {@code ToMainPageCommand} class represents to main page command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class ToMainPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final String LOCALE = "en_US";

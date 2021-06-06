@@ -21,6 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The {@code DepositCommand} class represents deposit command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class DepositCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final WalletService walletService = new WalletServiceImpl();
@@ -28,20 +34,20 @@ public class DepositCommand implements Command {
     private final UserService userService = new UserServiceImpl();
 
     @Override
-    public String execute(HttpServletRequest request) {//todo refactor
-        String page = PagePath.MAIN;
+    public String execute(HttpServletRequest request) {
+        String page;
         HttpSession session = request.getSession();
         String addBalance = request.getParameter(RequestParameter.REFILL_AMOUNT);
         if(!CardValidator.isAmountCorrect(addBalance)) {
             request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Incorrect deposit sum");
-            page = String.valueOf(session.getAttribute(SessionAttribute.CURRENT_PAGE));
+            page = PagePath.DEPOSIT;
         }
         else{
             String cardNumber = request.getParameter(RequestParameter.CARD_NUMBER);
             String login = (String) session.getAttribute(SessionAttribute.LOGIN);
             try {
                 Optional<User> userOptional = userService.findUserByLogin(login);
-                if (!userOptional.isPresent()) {
+                if (userOptional.isEmpty()) {
                     page = PagePath.HOME;
                 } else {
                     User user = userOptional.get();
@@ -50,14 +56,19 @@ public class DepositCommand implements Command {
                     if (cardService.isCardFinded(cardNumber, balanceToAdd)) {
                         double currentBalance = (Double) session.getAttribute(SessionAttribute.BALANCE);
                         double newBalance = currentBalance + balanceToAdd;
-                        if (walletService.changeBalance(walletId, newBalance)) {
-                            cardService.update(cardNumber, currentBalance - balanceToAdd);
+                        if (walletService.changeBalance(walletId, newBalance) &&
+                            cardService.update(cardNumber, currentBalance - balanceToAdd)) {
                             session.setAttribute(SessionAttribute.BALANCE, newBalance);
-                            page = PagePath.MAIN;
+                            request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Deposit successfully");
+                            page = PagePath.DEPOSIT;
+                        }
+                        else{
+                            request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Error while changing balance");
+                            page = PagePath.DEPOSIT;
                         }
                     } else{
-                        request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "incorrect card number");
-                        page = String.valueOf(session.getAttribute(SessionAttribute.CURRENT_PAGE));
+                        request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Incorrect card number");
+                        page = PagePath.DEPOSIT;
                     }
                 }
             } catch (ServiceException e) {

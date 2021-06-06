@@ -1,28 +1,67 @@
 package by.epam.webproject.model.entity;
 
+/**
+ * The {@code Wallet} class represents wallet entity
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class Wallet {
+    /**
+     *  The value is used for wallet id storage.
+     */
     private Integer walletId;
+
+    /**
+     *  The value is used for balance storage.
+     */
     private double balance;
 
     public Wallet(){}
 
+    /**
+     * Instantiates a new Bet
+     *
+     * @param walletId the wallet id
+     * @param balance the balance
+     */
     public Wallet(Integer walletId, double balance){
         this.walletId = walletId;
         this.balance = balance;
     }
 
+    /**
+     * Gets wallet id
+     *
+     * @return the wallet id
+     */
     public Integer getWalletId() {
         return walletId;
     }
 
+    /**
+     * Sets wallet id
+     *
+     * @param walletId the wallet id
+     */
     public void setWalletId(int walletId) {
         this.walletId = walletId;
     }
 
+    /**
+     * Gets balance
+     *
+     * @return the balance
+     */
     public double getBalance() {
         return balance;
     }
 
+    /**
+     * Sets balance
+     *
+     * @param balance the balance
+     */
     public void setBalance(double balance) {
         this.balance = balance;
     }

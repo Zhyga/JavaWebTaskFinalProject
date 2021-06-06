@@ -7,6 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * The {@code DatabaseConfig} class represents database config
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 class DatabaseConfig {
     private static final Logger logger = LogManager.getLogger();
     private static final String FILE_NAME = "properties/database.properties";
@@ -19,6 +25,9 @@ class DatabaseConfig {
     private final String username;
     private final String password;
 
+    /**
+     * Instantiates a new Database config.
+     */
     DatabaseConfig(){
         Properties properties = new Properties();
         try {
@@ -35,30 +44,39 @@ class DatabaseConfig {
         password = properties.getProperty(DATABASE_PASSWORD);
     }
 
+    /**
+     * Gets driver name
+     *
+     * @return
+     */
     public String getDriverName() {
         return driverName;
     }
 
+    /**
+     * Gets url
+     *
+     * @return
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Gets username
+     *
+     * @return
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Gets password
+     *
+     * @return
+     */
     public String getPassword() {
         return password;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("DatabaseConfig{");
-        sb.append("driverName='").append(driverName).append('\'');
-        sb.append(", url='").append(url).append('\'');
-        sb.append(", username='").append(username).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append('}');
-        return sb.toString();
     }
 }

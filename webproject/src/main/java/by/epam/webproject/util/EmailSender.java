@@ -8,6 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * The {@code EmailSender} class represents email sender
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class EmailSender {
     private static final String EMAIL_HEAD = "LYM bets";
     private static final String EMAIL_BODY = "Follow link to confirm your mail to register "
@@ -18,6 +24,13 @@ public class EmailSender {
     private EmailSender() {
     }
 
+    /**
+     * Send message
+     *
+     * @param email the email
+     * @param login the login
+     * @param url the url
+     */
     public static void sendMessage(String email, String login, String url) {
         try {
             Properties properties = new Properties();

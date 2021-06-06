@@ -9,6 +9,12 @@ import by.epam.webproject.model.service.WalletService;
 
 import java.util.Optional;
 
+/**
+ * The {@code WalletServiceImpl} class represents wallet service implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class WalletServiceImpl implements WalletService {
     private final WalletDao walletDao = WalletDaoImpl.getInstance();
 

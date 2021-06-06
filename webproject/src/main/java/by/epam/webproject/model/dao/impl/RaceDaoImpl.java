@@ -3,7 +3,6 @@ package by.epam.webproject.model.dao.impl;
 import by.epam.webproject.exception.DaoException;
 import by.epam.webproject.model.dao.ColumnName;
 import by.epam.webproject.model.dao.RaceDao;
-import by.epam.webproject.model.dao.RaceDateDao;
 import by.epam.webproject.model.entity.*;
 import by.epam.webproject.model.pool.ConnectionPool;
 
@@ -12,15 +11,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code RaceDaoImpl} class represents race dao implementation
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class RaceDaoImpl implements RaceDao {
     private static final RaceDaoImpl instance = new RaceDaoImpl();
-    private static final RaceDateDaoImpl raceDateDao = RaceDateDaoImpl.getInstance();//todo on service level
+    private static final RaceDateDaoImpl raceDateDao = RaceDateDaoImpl.getInstance();
     private static final String FIND_ALL = "SELECT race_id,title,rounds,details,races.race_data_id,race_data.date," +
             "race_data.participant_id FROM races INNER JOIN race_data ON races.race_data_id = race_data.race_data_id " +
             "ORDER BY race_data.date";
@@ -31,6 +35,11 @@ public class RaceDaoImpl implements RaceDao {
     private RaceDaoImpl() {
     }
 
+    /**
+     * Gets instance
+     *
+     * @return the instance
+     */
     public static RaceDao getInstance() {
         return instance;
     }
@@ -47,21 +56,20 @@ public class RaceDaoImpl implements RaceDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding all users", e);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new DaoException("Error while parsing date-time", e);
         }
         return races;
     }
 
 
     @Override
-    public boolean add(String title, int rounds, String details,RaceData raceDate) throws DaoException {//todo add participants
+    public boolean add(String title, int rounds, String details,RaceData raceDate) throws DaoException {
         boolean isAdded;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD);) {
             statement.setString(1, title);
             statement.setInt(2, rounds);
             statement.setString(3, details);
-            raceDateDao.add(raceDate);//todo move to service lvl
             statement.setInt(4,raceDate.getRaceDataId());
             statement.executeUpdate();
             isAdded = true;
@@ -86,7 +94,7 @@ public class RaceDaoImpl implements RaceDao {
     }
 
     @Override
-    public boolean update(int id, String title, int rounds, String details) throws DaoException {//todo test(not used)
+    public boolean update(int id, String title, int rounds, String details) throws DaoException {
         boolean isUpdated;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE);) {
@@ -97,7 +105,7 @@ public class RaceDaoImpl implements RaceDao {
             statement.executeUpdate();
             isUpdated = true;
         } catch (SQLException e) {
-            throw new DaoException("Error while changing user balance", e);
+            throw new DaoException("Error while changing race info", e);
         }
         return isUpdated;
     }
@@ -116,7 +124,7 @@ public class RaceDaoImpl implements RaceDao {
         race.setTitle(title);
         race.setRounds(rounds);
         race.setDetails(details);
-        List<Participant> participants = raceDateDao.findAllParticipants(race_data_string);
+        List<Participant> participants = raceDateDao.findAllParticipantsByDate(race_data_string);
         race.setRaceData(new RaceData(race_date_id, race_data, participants));
         return race;
     }

@@ -1,39 +1,100 @@
 package by.epam.webproject.model.entity;
 
+/**
+ * The {@code Participant} class represents participant entity
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class Participant {
+    /**
+     *  The value is used for participant id storage.
+     */
     private int participantID;
+
+    /**
+     *  The value is used for horse storage.
+     */
     private String horse;
+
+    /**
+     *  The value is used for weight storage.
+     */
     private int weight;
+
+    /**
+     *  The value is used for jockey storage.
+     */
     private String jockey;
 
+    /**
+     * Gets participant id
+     *
+     * @return the participant id
+     */
     public int getParticipantID() {
         return participantID;
     }
 
+    /**
+     * Sets participant id
+     *
+     * @param participantID
+     */
     public void setParticipantID(int participantID) {
         this.participantID = participantID;
     }
 
+    /**
+     * Gets horse
+     *
+     * @return the horse
+     */
     public String getHorse() {
         return horse;
     }
 
+    /**
+     * Sets horse
+     *
+     * @param horse the horse
+     */
     public void setHorse(String horse) {
         this.horse = horse;
     }
 
+    /**
+     * Gets weight
+     *
+     * @return the weight
+     */
     public int getWeight() {
         return weight;
     }
 
+    /**
+     * Sets weight
+     *
+     * @param weight the weight
+     */
     public void setWeight(int weight) {
         this.weight = weight;
     }
 
+    /**
+     * Gets jockey
+     *
+     * @return the jockey
+     */
     public String getJockey() {
         return jockey;
     }
 
+    /**
+     * Sets jockey
+     *
+     * @param jockey the jockey
+     */
     public void setJockey(String jockey) {
         this.jockey = jockey;
     }

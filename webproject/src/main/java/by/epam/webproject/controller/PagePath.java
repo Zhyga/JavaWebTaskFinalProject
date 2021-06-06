@@ -1,5 +1,11 @@
 package by.epam.webproject.controller;
 
+/**
+ * The {@code PagePath} class represents page path
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class PagePath {
     public static final String HOME = "/index.jsp";
     public static final String MAIN = "/pages/main.jsp";
@@ -10,7 +16,9 @@ public class PagePath {
     public static final String ADMIN_RACES = "/pages/admin/races.jsp";
     public static final String ADD_RACES = "/pages/admin/add_race.jsp";
     public static final String RACE = "/pages/race.jsp";
-    public static final String ADD_BALANCE = "/pages/deposit.jsp";
+    public static final String DEPOSIT = "/pages/deposit.jsp";
+    public static final String CHANGE_PASSWORD = "/pages/change_password.jsp";
+    public static final String BOOKMAKER_RACES = "/pages/bookmaker_races.jsp";
 
     private PagePath(){}
 }

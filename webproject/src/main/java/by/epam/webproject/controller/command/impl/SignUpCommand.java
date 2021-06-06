@@ -14,10 +14,15 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The {@code SignUpCommand} class represents sign up command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class SignUpCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private static final UserService userService = new UserServiceImpl();
-    private static final String ATTRIBUTE_USER = "user";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -25,19 +30,25 @@ public class SignUpCommand implements Command {
         String login = request.getParameter(RequestParameter.LOGIN_PARAMETER);
         String email = request.getParameter(RequestParameter.EMAIL_PARAMETER);
         String password = request.getParameter(RequestParameter.PASSWORD_PARAMETER);
-        try {
-            boolean isUserCreated = userService.createUser(email, login, password);
-            if (isUserCreated) {
-                EmailSender.sendMessage(email,login,request.getRequestURL().toString());
-                page = PagePath.MAIN;
+        String confirmPassword = request.getParameter(RequestParameter.CONFIRM_PASSWORD_PARAMETER);
+        if(!password.equals(confirmPassword)){
+            page = PagePath.SIGN_UP;
+            request.setAttribute(RequestAttribute.SIGN_IN_ERROR, "Passwords do not match!");
+        }
+        else {
+            try {
+                boolean isUserCreated = userService.createUser(email, login, password);
+                if (isUserCreated) {
+                    EmailSender.sendMessage(email, login, request.getRequestURL().toString());
+                    page = PagePath.MAIN;
+                } else {
+                    page = PagePath.SIGN_UP;
+                    request.setAttribute(RequestAttribute.SIGN_IN_ERROR, "Error occurred while reg user");
+                }
+            } catch (ServiceException e) {
+                logger.error("Error occurred while sign up user", e);
+                page = PagePath.HOME;
             }
-            else{
-                page = PagePath.SIGN_UP;
-                request.setAttribute(RequestAttribute.SIGN_IN_ERROR, "Error occurred while reg user");
-            }
-        } catch (ServiceException e) {
-            logger.error("Error occurred while sign up user", e);
-            page = PagePath.HOME;
         }
         return page;
     }

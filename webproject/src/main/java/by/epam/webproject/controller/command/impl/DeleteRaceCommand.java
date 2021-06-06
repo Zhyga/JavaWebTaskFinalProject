@@ -10,6 +10,12 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The {@code DeleteRaceCommand} class represents delete race command
+ *
+ * @author Alexey Zhyhadlo
+ * @version 1.0
+ */
 public class DeleteRaceCommand implements Command {
     private static final Logger logger = LogManager.getLogger();
     private final RaceServiceImpl raceService = new RaceServiceImpl();
