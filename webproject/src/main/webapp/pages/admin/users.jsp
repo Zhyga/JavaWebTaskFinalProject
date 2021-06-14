@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
-<ftm:setLocale value="${currentLocale}"/>
-<ftm:setBundle basename="l10n.front-text"/>
+<fmt:setLocale value="${currentLocale}"/>
+<fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
     <title>Profile</title>
@@ -22,25 +22,52 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col" style="border-top: none;" ><ftm:message key="adminUsers.email"/></th>
-                    <th scope="col" style="border-top: none;"><ftm:message key="adminUsers.login"/></th>
-                    <th scope="col" style="border-top: none;"><ftm:message key="adminUsers.amountOfBets"/></th>
-                    <th scope="col" style="border-top: none;"><ftm:message key="adminUsers.balance"/></th>
-                    <th scope="col" style="border-top: none;"><ftm:message key="adminUsers.role"/></th>
-                    <th scope="col" style="border-top: none;"><ftm:message key="adminUsers.isApproved"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="adminUsers.email"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="adminUsers.login"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="adminUsers.amountOfBets"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="adminUsers.balance"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="adminUsers.role"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="adminUsers.isApproved"/></th>
                 </tr>
                 </thead>
                 <tbody>
-                <label style="color: red">${errorEmptyBetInfoList}</label>
+                <label style="color: red">${errorAdminUser}</label>
                 <c:forEach var="user" items="${usersList}" varStatus="status">
                     <tr>
                         <td><C:out value="${user.email}"/></td>
                         <td><c:out value="${user.login}"/></td>
                         <td><c:out value="${user.amountOfBets}"/></td>
-                        <td><c:out value="${user.wallet.balance}"/></td>
-                        <td><c:out value="${user.role.roleName}"/></td>
+                        <td><input type="text" value="<c:out value="${user.wallet.balance}"/>" name="userBalance" form="user_${user.userId}_form">
+                        </td>
+                        <td>
+                            <select class="form-select" name="role" aria-label="Default select example" form="user_${user.userId}_form">
+                                <c:choose>
+                                    <c:when test="${user.role.roleName.equals('admin')}">
+                                        <option selected  value="admin">Admin</option>
+                                        <option  value="user">User</option>
+                                        <option  value="bookmaker">Bookmaker</option>
+                                    </c:when>
+                                    <c:when test="${user.role.roleName.equals('user')}">
+                                        <option  value="admin">Admin</option>
+                                        <option selected value="user">User</option>
+                                        <option  value="bookmaker">Bookmaker</option>
+                                    </c:when>
+                                    <c:when test="${user.role.roleName.equals('bookmaker')}">
+                                        <option selected  value="bookmaker">Bookmaker</option>
+                                        <option  value="admin">Admin</option>
+                                        <option  value="user">User</option>
+                                    </c:when>
+                                </c:choose>
+                            </select>
+                        </td>
                         <td><c:out value="${user.isApproved}"/></td>
-                        <td><form><button><ftm:message key="adminUsers.changeRole"/></button></form></td><!--Использую get запрос-->
+                        <td>
+                            <form id="user_${user.userId}_form">
+                                <button type="submit" name="command" value="change_role"><fmt:message
+                                        key="adminUsers.changeRole"/></button>
+                                <input type="hidden" name="userId" value="${user.userId}">
+                            </form>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

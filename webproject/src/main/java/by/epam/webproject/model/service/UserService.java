@@ -60,14 +60,15 @@ public interface UserService {
      Optional<User> authorizeUser(String login, String password) throws ServiceException;
 
      /**
-      * Change user role
+      * Change user role & balance
       *
-      * @param role the role
-      * @param login the login
+      * @param userId the user id
+      * @param roleName the role name
+      * @param balance the balance
       * @return the boolean
       * @throws ServiceException the service exception
       */
-     boolean changeRole(String role,String login) throws ServiceException;
+     boolean update(String userId, String roleName,String balance) throws ServiceException;
 
      /**
       * Confirm user email

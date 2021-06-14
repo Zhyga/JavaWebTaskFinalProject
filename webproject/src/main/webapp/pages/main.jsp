@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<ftm:setLocale value="${currentLocale}"/>
-<ftm:setBundle basename="l10n.front-text"/>
+<fmt:setLocale value="${currentLocale}"/>
+<fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
     <title>LYM</title>
@@ -20,13 +20,13 @@
         <li class="nav-item">
             <form action="controller" method="post" class="mb-0">
                 <button class="nav-link active" type="submit" name="command" value="to_main">
-                    <ftm:message key="main.currentEvents"/></button>
+                    <fmt:message key="main.currentEvents"/></button>
             </form>
         </li>
         <li class="nav-item">
             <form action="controller" method="post" class="mb-0">
                 <button class="nav-link pastEventsBut" type="submit" name="command" value="to_main">
-                    <ftm:message key="main.pastEvents"/></button>
+                    <fmt:message key="main.pastEvents"/></button>
             </form>
         </li>
     </ul>
@@ -34,10 +34,10 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col" style="border-top: none;"><ftm:message key="main.eventTime"/></th>
-            <th scope="col" style="border-top: none;"><ftm:message key="main.eventTitle"/></th>
-            <th scope="col" style="border-top: none;"><ftm:message key="main.eventRound"/></th>
-            <th scope="col" style="border-top: none;"><ftm:message key="main.eventDetails"/></th>
+            <th scope="col" style="border-top: none;"><fmt:message key="main.eventTime"/></th>
+            <th scope="col" style="border-top: none;"><fmt:message key="main.eventTitle"/></th>
+            <th scope="col" style="border-top: none;"><fmt:message key="main.eventRound"/></th>
+            <th scope="col" style="border-top: none;"><fmt:message key="main.eventDetails"/></th>
         </tr>
         </thead>
         <tbody>

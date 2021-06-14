@@ -2,6 +2,7 @@ package by.epam.webproject.controller;
 
 import by.epam.webproject.controller.command.Command;
 import by.epam.webproject.controller.command.CommandProvider;
+import by.epam.webproject.model.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,5 +38,12 @@ public class Controller extends HttpServlet {
         session.setAttribute(SessionAttribute.CURRENT_PAGE,page);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
         dispatcher.forward(req, resp);
+    }
+
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        ConnectionPool.INSTANCE.destroyPool();
     }
 }

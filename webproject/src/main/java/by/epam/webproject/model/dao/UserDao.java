@@ -80,14 +80,15 @@ public interface UserDao {
     boolean add(String email, String login, String password, Wallet wallet) throws DaoException;
 
     /**
-     * Change user role
+     * Change user role & balance
      *
+     * @param userId the user id
      * @param roleId the role id
-     * @param login the login
+     * @param balance the balance
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean changeRole(int roleId,String login) throws DaoException;
+    boolean update(int userId,int roleId,double balance) throws DaoException;
 
     /**
      * Confirm user email

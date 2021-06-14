@@ -20,7 +20,7 @@ public class CardServiceImpl implements CardService {
     public boolean isCardFinded(String cardNumber, double balance) throws ServiceException {
         boolean isFinded = false;
         try {
-            if(CardValidator.isCardNumberCorrect(cardNumber) && CardValidator.isAmountCorrect(String.valueOf(balance))) {
+            if(CardValidator.isCardNumberCorrect(cardNumber)) {
                 if(cardDao.findByCardNumber(cardNumber,balance)) {
                     isFinded = true;
                 }

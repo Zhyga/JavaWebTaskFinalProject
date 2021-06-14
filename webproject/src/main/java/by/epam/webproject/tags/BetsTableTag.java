@@ -1,6 +1,7 @@
 package by.epam.webproject.tags;
 
 
+import by.epam.webproject.controller.SessionAttribute;
 import by.epam.webproject.model.entity.Bet;
 import by.epam.webproject.model.entity.Participant;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +24,8 @@ public class BetsTableTag extends TagSupport {
     private static final Logger logger = LogManager.getLogger();
     private ArrayList<Participant> participants;
     private ArrayList<Bet> bets;
+    private static final String USER = "user";
+    private static final String BOOKMAKER = "bookmaker";
 
     /**
      * Sets participants
@@ -44,19 +47,32 @@ public class BetsTableTag extends TagSupport {
 
     @Override
     public int doStartTag() {
+        HttpSession session = pageContext.getSession();
+        String roleName = (String) session.getAttribute(SessionAttribute.ROLE);
         try {
             for (int i = 0; i < participants.size(); i++) {
                 pageContext.getOut().write("<tr style=\"vertical-align: middle\">\n" +
                         "<td>" + participants.get(i).getJockey() + "</td>\n" +
                         "<td>" + participants.get(i).getHorse() + "</td>\n" +
                         "<td>" + participants.get(i).getWeight() + "</td>\n");
-                if (bets.size() != 0) {
-                    pageContext.getOut().write("<td>" + bets.get(i).getFirstMultiplier() + "</td>\n" +
+                if (roleName.equals(USER)) {
+                    if (bets.size() != 0) {
+                        pageContext.getOut().write("<td>" + bets.get(i).getFirstMultiplier() + "</td>\n" +
+                                "<td>\n" +
+                                "<form action=\"controller\" method=\"post\">\n" +
+                                "<input type=\"text\" name=\"betSize\" title=\"Bet size\">\n" +
+                                "<button type=\"submit\" name=\"command\" value=\"place_bet\">Bet</button>\n" +
+                                "<input type=\"hidden\" name=\"betId\" value=" + bets.get(i).getBetId() + ">\n" +
+                                " </form>\n" +
+                                "</td>\n" +
+                                "</tr>\n");
+                    }
+                }
+                if(roleName.equals(BOOKMAKER)){
+                    pageContext.getOut().write("<td><input type=\"text\" name=\"betOdd\"></td>\n" +
                             "<td>\n" +
                             "<form action=\"controller\" method=\"post\">\n" +
-                            "<input type=\"text\" name=\"betSize\" title=\"Bet size\">\n" +
-                            "<button type=\"submit\" name=\"command\" value=\"place_bet\">Bet</button>\n" +
-                            "<input type=\"hidden\" name=\"betId\" value=" + bets.get(i).getBetId() + ">\n" +
+                            "<button type=\"submit\" name=\"command\" value=\"add_odd\">Submit</button>\n" +
                             " </form>\n" +
                             "</td>\n" +
                             "</tr>\n");

@@ -58,7 +58,7 @@ public class WithdrawCommand implements Command {
                         if (walletService.changeBalance(walletId, newBalance) &&
                                 cardService.update(cardNumber, currentBalance + balanceToWithdraw)) {
                             session.setAttribute(SessionAttribute.BALANCE, newBalance);
-                            request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Deposit successfully");
+                            request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Withdraw successfully");
                             page = PagePath.DEPOSIT;
                         } else {
                             request.setAttribute(RequestAttribute.CAR_NUMBER_ERROR, "Error while changing balance");

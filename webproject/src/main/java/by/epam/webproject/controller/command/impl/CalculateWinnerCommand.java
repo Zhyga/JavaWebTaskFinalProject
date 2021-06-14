@@ -61,6 +61,7 @@ public class CalculateWinnerCommand implements Command {
                         }
                     }
                 }
+                betService.clearOdds(raceId);
                 page = PagePath.BOOKMAKER_RACES;
             }
         } catch (ServiceException e) {

@@ -27,8 +27,11 @@ import java.util.Optional;
  */
 public class ParticipantsDaoImpl implements ParticipantDao {
     private static final ParticipantsDaoImpl instance = new ParticipantsDaoImpl();
+    private static final String ADD = "INSERT INTO participants (jockey,horse,weight) VALUES (?,?,?)";
+    private static final String UPDATE = "UPDATE participants SET jockey = ?, horse = ?, weight = ?";
     private static final String FIND_ALL = "SELECT participant_id,horse,weight,jockey FROM participants";
     private static final String FIND_BY_HORSE = "SELECT participant_id,horse,weight,jockey FROM participants WHERE horse = ?";
+    private static final String FIND_BY_ID = "SELECT participant_id,horse,weight,jockey FROM participants WHERE participant_id = ?";
 
     private ParticipantsDaoImpl() {
     }
@@ -43,8 +46,37 @@ public class ParticipantsDaoImpl implements ParticipantDao {
     }
 
     @Override
-    public boolean add() throws DaoException {//todo
-        return false;
+    public boolean add(String jockey, String horse,int weight) throws DaoException {
+        boolean isAdded;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD);
+             ) {
+            statement.setString(1,jockey);
+            statement.setString(2,horse);
+            statement.setInt(3,weight);
+            statement.executeUpdate();
+            isAdded = true;
+        } catch (SQLException e) {
+            throw new DaoException("Error while adding participant", e);
+        }
+        return isAdded;
+    }
+
+    @Override
+    public boolean update(String jockey, String horse, int weight) throws DaoException {
+        boolean isUpdated;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE);
+        ) {
+            statement.setString(1,jockey);
+            statement.setString(2,horse);
+            statement.setInt(3,weight);
+            statement.executeUpdate();
+            isUpdated = true;
+        } catch (SQLException e) {
+            throw new DaoException("Error while updating participant", e);
+        }
+        return isUpdated;
     }
 
     @Override
@@ -65,6 +97,27 @@ public class ParticipantsDaoImpl implements ParticipantDao {
             throw new DaoException("Error while finding all users", e);
         }
         return participants;
+    }
+
+    @Override
+    public Optional<Participant> findById(int id) throws DaoException {
+        Optional<Participant> participantOptional = Optional.empty();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(FIND_BY_ID);) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Participant participant = new Participant();
+                participant.setParticipantID(resultSet.getInt(ColumnName.PARTICIPANT_ID));
+                participant.setHorse(resultSet.getString(ColumnName.HORSE));
+                participant.setWeight(resultSet.getInt(ColumnName.WEIGHT));
+                participant.setJockey(resultSet.getString(ColumnName.JOCKEY));
+                participantOptional = Optional.of(participant);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding participant", e);
+        }
+        return participantOptional;
     }
 
     @Override

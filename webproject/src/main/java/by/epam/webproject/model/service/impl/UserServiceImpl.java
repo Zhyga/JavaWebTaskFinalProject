@@ -9,6 +9,7 @@ import by.epam.webproject.exception.DaoException;
 import by.epam.webproject.exception.ServiceException;
 import by.epam.webproject.model.entity.Wallet;
 import by.epam.webproject.model.service.UserService;
+import by.epam.webproject.model.validator.CardValidator;
 import by.epam.webproject.model.validator.UserValidator;
 import by.epam.webproject.util.PasswordEncryptor;
 
@@ -85,18 +86,22 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public boolean changeRole(String role, String login) throws ServiceException {//todo test
-        boolean isRoleChanged;
-        int roleId;
-        switch (role) {
+    public boolean update(String userId, String roleName, String balance) throws ServiceException{
+        boolean isRoleChanged = false;
+        int roleId = 0;
+        switch (roleName) {
             case "bookmaker" -> roleId = 2;
             case "admin" -> roleId = 3;
-            default -> roleId = 1;
+            case "user" -> roleId = 1;
         }
-        try {
-            isRoleChanged = userDao.changeRole(roleId,login);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
+        if(UserValidator.isIdCorrect(userId) && CardValidator.isAmountCorrect(balance) && roleId != 0) {
+            int userIdInt = Integer.parseInt(userId);
+            double balanceDouble = Double.parseDouble(balance);
+            try {
+                isRoleChanged = userDao.update(userIdInt,roleId,balanceDouble);
+            } catch (DaoException e) {
+                throw new ServiceException(e);
+            }
         }
         return isRoleChanged;
     }

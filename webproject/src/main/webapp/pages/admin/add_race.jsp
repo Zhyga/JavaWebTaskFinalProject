@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
-<ftm:setLocale value="${currentLocale}"/>
-<ftm:setBundle basename="l10n.front-text"/>
+<fmt:setLocale value="${currentLocale}"/>
+<fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
     <title>Profile</title>
@@ -20,7 +20,7 @@
     <form action="controller" method="post">
         <p>
             <label>Title:</label>
-            <input type="text" name="raceTitle" required pattern="^[A-Za-z]*\s|[A-Za-z]*\s[A-Za-z]*$">
+            <input type="text" name="raceTitle" required pattern="^[A-Za-z]*|[A-Za-z]*\s[A-Za-z]*$">
         </p>
         <p>
             <label>Round:</label>

@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<ftm:setLocale value="${currentLocale}"/>
-<ftm:setBundle basename="l10n.front-text"/>
+<fmt:setLocale value="${currentLocale}"/>
+<fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
     <title>LYM</title>
@@ -19,46 +19,46 @@
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <button class="nav-link tabLink pastEventsBut" id="defaultOpen" onclick="openTab(event,'deposit')" >
-                <ftm:message key="balanceEnrich.deposit"/>
+                <fmt:message key="balanceEnrich.deposit"/>
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link pastEventsBut tabLink" onclick="openTab(event,'withdraw')">
-                <ftm:message key="balanceEnrich.withdraw"/>
+                <fmt:message key="balanceEnrich.withdraw"/>
             </button>
         </li>
 
     </ul>
     <form action="controller" method="post" class="tabContent" id="deposit">
         <div class="form-group">
-            <label for="inputCardNumber"><ftm:message key="balanceEnrich.cardNumber"/></label>
+            <label for="inputCardNumber"><fmt:message key="balanceEnrich.cardNumber"/></label>
             <input type="text" name="cardNumber" class="form-control" id="inputCardNumber" required
                    pattern="^[0-9]{16}$">
         </div>
         <div class="form-group">
-            <label for="inputAmount"><ftm:message key="balanceEnrich.depositAmount"/></label>
+            <label for="inputAmount"><fmt:message key="balanceEnrich.depositAmount"/></label>
             <input type="text" name="refillAmount" class="form-control" required>
         </div>
         <label style="color: red">${errorIncorrectCarNumber}</label>
         <br/>
         <button type="submit" name="command" value="deposit" class="btn btn-primary">
-            <ftm:message key="balanceEnrich.deposit"/>
+            <fmt:message key="balanceEnrich.deposit"/>
         </button>
     </form>
     <form action="controller" method="post" class="tabContent" id="withdraw">
         <div class="form-group">
-            <label for="inputCardNumber"><ftm:message key="balanceEnrich.cardNumber"/></label>
+            <label for="inputCardNumber"><fmt:message key="balanceEnrich.cardNumber"/></label>
             <input type="text" name="cardNumber" class="form-control" required
                    pattern="^[0-9]{16}$">
         </div>
         <div class="form-group">
-            <label for="inputAmount"><ftm:message key="balanceEnrich.withdrawAmount"/></label>
+            <label for="inputAmount"><fmt:message key="balanceEnrich.withdrawAmount"/></label>
             <input type="text" name="withdrawAmount" class="form-control" id="inputAmount" required>
         </div>
         <label style="color: red">${errorIncorrectCarNumber}</label>
         <br/>
         <button type="submit" name="command" value="withdraw" class="btn btn-primary">
-            <ftm:message key="balanceEnrich.withdraw"/>
+            <fmt:message key="balanceEnrich.withdraw"/>
         </button>
     </form>
 </div>

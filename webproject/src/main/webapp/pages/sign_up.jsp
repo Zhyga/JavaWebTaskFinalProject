@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<ftm:setLocale value="${currentLocale}"/>
-<ftm:setBundle basename="l10n.front-text"/>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${currentLocale}"/>
+<fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
     <title>Sign up</title>
@@ -17,31 +17,31 @@
 <div class="container justify-content-center" style="width: 380px; margin-left: auto; margin-right: auto">
     <form action="controller" method="post">
         <div class="form-group">
-            <label for="inputEmail"><ftm:message key="login.email"/></label>
+            <label for="inputEmail"><fmt:message key="login.email"/></label>
             <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
                    placeholder="Enter email" required pattern="^[\w\.]{3,13}@(gmail|yandex|tut|mail)\.(com|ru|by)$">
-            <small id="emailHelp" class="form-text text-muted"><ftm:message key="login.emailHelper"/></small>
+            <small id="emailHelp" class="form-text text-muted"><fmt:message key="login.emailHelper"/></small>
         </div>
         <div class="form-group">
-            <label for="inputLogin"><ftm:message key="login.login"/></label>
+            <label for="inputLogin"><fmt:message key="login.login"/></label>
             <input type="text" name="login" class="form-control" id="inputLogin" aria-describedby="loginHelp"
                    placeholder="Enter login" required pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][\w.-]{0,19}$"
                    title="Login must start with a letter and ends with a letter or a digit">
-            <small id="loginHelp" class="form-text text-muted"><ftm:message key="login.loginHelper"/></small>
+            <small id="loginHelp" class="form-text text-muted"><fmt:message key="login.loginHelper"/></small>
         </div>
         <div class="form-group">
-            <label for="inputPassword"><ftm:message key="login.password"/></label>
+            <label for="inputPassword"><fmt:message key="login.password"/></label>
             <input type="password" name="password" class="form-control" id="inputPassword"
-                   placeholder="<ftm:message key="login.password"/>" required pattern="^[\w]{3,20}$">
+                   placeholder="<fmt:message key="login.password"/>" required pattern="^[\w]{3,20}$">
         </div>
         <div class="form-group">
-            <label for="inputConfirmPassword"><ftm:message key="login.password"/></label>
+            <label for="inputConfirmPassword"><fmt:message key="login.password"/></label>
             <input type="password" name="confirmedPassword" class="form-control" id="inputConfirmPassword"
-                   placeholder="<ftm:message key="login.password"/>" required pattern="^[\w]{3,20}$">
+                   placeholder="<fmt:message key="login.password"/>" required pattern="^[\w]{3,20}$">
         </div>
         <label style="color: red">${errorSignUpMessage}</label>
         <br/>
-        <button type="submit" class="btn btn-primary" id="signUpButton"><ftm:message key="login.register"/></button>
+        <button type="submit" class="btn btn-primary" id="signUpButton"><fmt:message key="login.register"/></button>
         <input type="hidden" name="command" value="sign_up">
     </form>
 </div>

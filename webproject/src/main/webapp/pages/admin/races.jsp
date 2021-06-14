@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
-<ftm:setLocale value="${currentLocale}"/>
-<ftm:setBundle basename="l10n.front-text"/>
+<fmt:setLocale value="${currentLocale}"/>
+<fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
     <title>Profile</title>
@@ -20,16 +20,16 @@
     <div class="row">
         <div class="col">
             <form action="controller" method="post">
-                <button type="submit" name="command" value="to_add_race"><ftm:message key="adminRaces.addRace"/></button>
+                <button type="submit" name="command" value="to_add_race"><fmt:message key="adminRaces.addRace"/></button>
             </form>
             <label style="color: red">${raceDeleted}</label>
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col" style="border-top: none;"><ftm:message key="main.eventTime"/></th>
-                    <th scope="col" style="border-top: none;"><ftm:message key="main.eventTitle"/></th>
-                    <th scope="col" style="border-top: none;"><ftm:message key="main.eventRound"/></th>
-                    <th scope="col" style="border-top: none;"><ftm:message key="main.eventDetails"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="main.eventTime"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="main.eventTitle"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="main.eventRound"/></th>
+                    <th scope="col" style="border-top: none;"><fmt:message key="main.eventDetails"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
                         <td><c:out value="${race.rounds}"/></td>
                         <td><c:out value="${race.details}"/></td>
                         <td><a href="controller?command=delete_race&raceId=${race.raceId}">
-                            <ftm:message key="adminRaces.deleteRace"/>
+                            <fmt:message key="adminRaces.deleteRace"/>
                             </a></td>
                     </tr>
                 </c:forEach>

@@ -8,7 +8,7 @@ package by.epam.webproject.model.validator;
  */
 public class CardValidator {
     private static final String CAR_NUMBER_REGEX = "^\\d{16}$";
-    private static final String AMOUNT_REGEX = "^[1-9][0-9]{1,6}([.,][0-9]{1,2})?$$";
+    private static final String AMOUNT_REGEX = "^[1-9][0-9]{1,6}(\\.[0-9]{1,2})?$";
 
     /**
      * Checks card number

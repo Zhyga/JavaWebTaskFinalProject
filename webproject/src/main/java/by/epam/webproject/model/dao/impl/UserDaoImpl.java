@@ -42,7 +42,8 @@ public class UserDaoImpl implements UserDao {
             "INNER JOIN wallets ON users.wallet_id = wallets.wallet_id "
             + "WHERE user_id LIKE ?";
     private static final String CHECK_BY_LOGIN = "SELECT password FROM users WHERE login LIKE ?";
-    private static final String UPDATE_ROLE = "UPDATE users SET role_id = ? WHERE login = ?";
+    private static final String UPDATE_ROLE_BALANCE = "UPDATE users INNER JOIN wallets on users.wallet_id = wallets.wallet_id " +
+            " SET role_id = ?,balance = ? WHERE user_id = ?";
     private static final String UPDATE_IS_APPROVED = "UPDATE users SET is_approved = 1 WHERE login = ?";
     private static final String UPDATE_PASSWORD = "UPDATE users SET password = ? WHERE login = ?";
 
@@ -172,16 +173,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean changeRole(int roleId,String login) throws DaoException {//todo test
+    public boolean update(int userId,int roleId,double balance) throws DaoException {
         boolean isChanged;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_ROLE);) {
+             PreparedStatement statement = connection.prepareStatement(UPDATE_ROLE_BALANCE);) {
             statement.setInt(1, roleId);
-            statement.setString(2, login);
+            statement.setDouble(2, balance);
+            statement.setInt(3, userId);
             statement.executeUpdate();
             isChanged = true;
         } catch (SQLException e) {
-            throw new DaoException("Error while changing role: " + login, e);
+            throw new DaoException("Error while changing role or balance", e);
         }
         return isChanged;
     }

@@ -13,9 +13,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class RaceValidator {
     private static final String ID_REGEX = "^[1-9]\\d{0,9}$";
-    private static final String TITLE_REGEX = "^[A-Za-z]*\\s|[A-Za-z]*\\s[A-Za-z]*$";
+    private static final String TITLE_REGEX = "^[A-Za-z]*|[A-Za-z]*\\s[A-Za-z]{1,45}$";
     private static final String ROUNDS_REGEX = "^[1-9]{1,2}$";
-    private static final String DETAILS_REGEX = "^[A-Za-z\\s\\|\\.\\,]*$";
+    private static final String DETAILS_REGEX = "^[A-Za-z0-9\\s\\|\\.\\,]{1,100}$";
 
     /**
      * Checks id

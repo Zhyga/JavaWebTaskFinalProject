@@ -28,6 +28,7 @@ public class BetDaoImpl implements BetDao {
             "FROM bets INNER JOIN races on bets.race_id = races.race_id WHERE bets.race_id = ?";
     private static final String FIND_BET_BY_ID = "SELECT bet_id,type_of_bet,first_multiplier,second_multiplier,bets.race_id " +
             "FROM bets WHERE bet_id = ?";
+    private static final String DELETE_BETS = "DELETE FROM bets WHERE bets.race_id = ?";
 
     private BetDaoImpl() {
     }
@@ -71,6 +72,20 @@ public class BetDaoImpl implements BetDao {
             throw new DaoException("Error while finding all bets on race", e);
         }
         return betOptional;
+    }
+
+    @Override
+    public boolean removeRaceBets(int raceId) throws DaoException {
+        boolean isRemoved;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE_BETS);) {
+            statement.setInt(1, raceId);
+            statement.execute();
+            isRemoved = true;
+        } catch (SQLException e) {
+            throw new DaoException("Error while removing all bets on race", e);
+        }
+        return isRemoved;
     }
 
     private Bet createBetsFromResultSet(ResultSet resultSet) throws SQLException {

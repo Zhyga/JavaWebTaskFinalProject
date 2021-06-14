@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * The {@code ConnectionPool} class represents connection pool
@@ -25,8 +27,8 @@ public enum ConnectionPool {
 
     private final Logger logger = LogManager.getLogger();
     private static final int POOL_SIZE = 8;
-    private final BlockingDeque<ProxyConnection> freeConnections;
-    private final BlockingDeque<ProxyConnection> givenAwayConnections;
+    private final BlockingQueue<ProxyConnection> freeConnections;
+    private final BlockingQueue<ProxyConnection> givenAwayConnections;
 
 
     ConnectionPool() {
@@ -37,8 +39,8 @@ public enum ConnectionPool {
             String username = databaseConfig.getUsername();
             String password = databaseConfig.getPassword();
             Class.forName(driverName);
-            freeConnections = new LinkedBlockingDeque<>(POOL_SIZE);
-            givenAwayConnections = new LinkedBlockingDeque<>();
+            freeConnections = new LinkedBlockingQueue<>(POOL_SIZE);
+            givenAwayConnections = new LinkedBlockingQueue<>();
             for (int i = 0; i < POOL_SIZE; i++) {
                 Connection connection = DriverManager.getConnection(url, username, password);
                 freeConnections.offer(new ProxyConnection(connection));
@@ -52,7 +54,7 @@ public enum ConnectionPool {
     /**
      * Gets connection
      *
-     * @return theconnection
+     * @return the connection
      */
     public Connection getConnection() {
         ProxyConnection connection = null;
@@ -87,7 +89,7 @@ public enum ConnectionPool {
             try {
                 freeConnections.take().reallyClose();
             } catch (InterruptedException | SQLException e) {
-                logger.warn("Connection is not deleted");
+                logger.error("Connection is not deleted");
             }
         }
         deregisterDriver();

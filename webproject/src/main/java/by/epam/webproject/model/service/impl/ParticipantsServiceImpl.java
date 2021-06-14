@@ -6,8 +6,10 @@ import by.epam.webproject.model.dao.ParticipantDao;
 import by.epam.webproject.model.dao.impl.ParticipantsDaoImpl;
 import by.epam.webproject.model.entity.Participant;
 import by.epam.webproject.model.service.ParticipantService;
+import by.epam.webproject.model.validator.ParticipantValidator;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The {@code ParticipantsServiceImpl} class represents participants service implementation
@@ -19,8 +21,37 @@ public class ParticipantsServiceImpl implements ParticipantService {
     private final ParticipantDao participantDao = ParticipantsDaoImpl.getInstance();
 
     @Override
-    public boolean add() throws ServiceException {
-        return false;
+    public boolean add(String jockey, String horse,String weight) throws ServiceException {
+        boolean isAdded = false;
+        if(ParticipantValidator.isJockeyCorrect(jockey) && ParticipantValidator.isHorseCorrect(horse) &&
+        ParticipantValidator.isWeightCorrect(weight)) {
+            int weightInt = Integer.parseInt(weight);
+            try {
+                if(participantDao.add(jockey, horse, weightInt)){
+                    isAdded = true;
+                }
+            } catch (DaoException e) {
+                throw new ServiceException(e);
+            }
+        }
+        return isAdded;
+    }
+
+    @Override
+    public boolean update(String jockey, String horse, String weight) throws ServiceException {
+        boolean isUpdated = false;
+        if(ParticipantValidator.isJockeyCorrect(jockey) && ParticipantValidator.isHorseCorrect(horse) &&
+                ParticipantValidator.isWeightCorrect(weight)) {
+            int weightInt = Integer.parseInt(weight);
+            try {
+                if(participantDao.update(jockey, horse, weightInt)){
+                    isUpdated = true;
+                }
+            } catch (DaoException e) {
+                throw new ServiceException(e);
+            }
+        }
+        return isUpdated;
     }
 
     @Override
@@ -31,5 +62,19 @@ public class ParticipantsServiceImpl implements ParticipantService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+    }
+
+    @Override
+    public Optional<Participant> findParticipantById(String id) throws ServiceException {
+        Optional<Participant> participantOptional = Optional.empty();
+        try {
+            if(ParticipantValidator.isIdCorrect(id)) {
+                int participantId = Integer.parseInt(id);
+                participantOptional = participantDao.findById(participantId);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return participantOptional;
     }
 }

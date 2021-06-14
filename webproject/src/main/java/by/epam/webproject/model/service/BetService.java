@@ -31,4 +31,12 @@ public interface BetService {
      * @throws ServiceException the service exception
      */
     Optional<Bet> findById(int betId) throws ServiceException;
+
+    /**
+     *
+     * @param raceId the race id
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean clearOdds(int raceId) throws ServiceException;
 }

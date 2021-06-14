@@ -49,6 +49,16 @@ public enum CommandType {
             this.command = new ChangeRoleCommand();
         }
     },
+    ADD_ODD{
+        {
+            this.command = new AddOddCommand();
+        }
+    },
+    ADD_PARTICIPANT{
+        {
+            this.command = new AddParticipant();
+        }
+    },
     CONFIRM_EMAIL{
         {
             this.command = new ConfirmEmailCommand();
@@ -77,6 +87,26 @@ public enum CommandType {
     TO_MAIN{
         {
             this.command = new ToMainPageCommand();
+        }
+    },
+    TO_ADMIN_PARTICIPANTS{
+        {
+            this.command = new ToAdminParticipantsPageCommand();
+        }
+    },
+    TO_ADD_PARTICIPANT{
+        {
+            this.command = new ToAddParticipantPageCommand();
+        }
+    },
+    TO_EDIT_PARTICIPANT{
+        {
+            this.command = new ToAdminEditParticipantPage();
+        }
+    },
+    EDIT_PARTICIPANT{
+        {
+            this.command = new EditParticipantCommand();
         }
     },
     TO_PROFILE{

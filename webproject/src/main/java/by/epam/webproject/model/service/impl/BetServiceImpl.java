@@ -39,4 +39,17 @@ public class BetServiceImpl implements BetService {
         }
         return betOptional;
     }
+
+    @Override
+    public boolean clearOdds(int raceId) throws ServiceException {
+        boolean isCleared = false;
+        try {
+            if(betDao.removeRaceBets(raceId)){
+                isCleared = true;
+            }
+        } catch (DaoException e) {
+           throw new ServiceException(e);
+        }
+        return isCleared;
+    }
 }

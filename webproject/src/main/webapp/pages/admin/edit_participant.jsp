@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="ctg" uri="customTags" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${currentLocale}"/>
 <fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
-    <title>${currentRace.title}</title>
+    <title>Profile</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css">
@@ -15,28 +15,29 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/project.css">
 </head>
 <body>
-<jsp:include page="modules/header.jsp"/>
+<jsp:include page="../modules/header.jsp"/>
 <div class="container" style="width: 980px; margin-left: auto; margin-right: auto">
-    <label><c:out value="${currentRace.title}"/></label>
-    <p><c:out value="${currentRace.raceData.date}"/></p>
-    <p><c:out value="${currentRace.rounds}"/> rounds</p>
-    <p><c:out value="${currentRace.details}"/></p>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col" style="border-top: none;"><fmt:message key="race.jockey"/></th>
-            <th scope="col" style="border-top: none;"><fmt:message key="race.horse"/></th>
-            <th scope="col" style="border-top: none;"><fmt:message key="race.weight"/></th>
-            <th scope="col" style="border-top: none;"><fmt:message key="race.odds"/></th>
-            <th scope="col" style="border-top: none;"></th>
-        </tr>
-        </thead>
-        <tbody>
-            <ctg:bets-table participants="${currentRace.raceData.participantsId}" bets="${raceBets}"/>
-        </tbody>
-    </table>
+    <form action="controller" method="post">
+        <p>
+            <label>Jockey:</label>
+            <input type="text" name="jockey" value="${jockey}" required pattern="^[A-Za-z]{3,45}|[A-Za-z]*\s[A-Za-z]{3,45}$">
+        </p>
+        <p>
+            <label>Horse:</label>
+            <input type="text" name="horse" value="${horse}" required pattern="^[A-Za-z]{3,45}$">
+        </p>
+        <p>
+            <label>Weight:</label>
+            <input type="text" name="weight" value="${weight}" required pattern="^[1-9][0-9]{1,2}$">
+        </p>
+        <p>
+            <button type="submit" name="command" value="edit_participant"><fmt:message key="adminParticipants.editParticipant"/></button>
+        </p>
+
+    </form>
+    <label style="color: red">${errorParticipantCreated}</label>
 </div>
-<jsp:include page="modules/footer.jsp"/>
+<jsp:include page="../modules/footer.jsp"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/project.js"></script>

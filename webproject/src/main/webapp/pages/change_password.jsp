@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="ftm" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<ftm:setLocale value="${currentLocale}"/>
-<ftm:setBundle basename="l10n.front-text"/>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${currentLocale}"/>
+<fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
     <title>Sign in</title>
@@ -17,24 +17,24 @@
 <div class="container justify-content-center" style="width: 380px; margin-left: auto; margin-right: auto">
     <form action="controller" method="post">
         <div class="form-group">
-            <label for="inputOldPassword"><ftm:message key="changePassword.oldPassword"/></label>
+            <label for="inputOldPassword"><fmt:message key="changePassword.oldPassword"/></label>
             <input type="password" name="oldPassword" class="form-control" id="inputOldPassword"
-                   placeholder="<ftm:message key="changePassword.oldPasswordHelper"/>" pattern="^[\w]{3,20}$" required>
+                   placeholder="<fmt:message key="changePassword.oldPasswordHelper"/>" pattern="^[\w]{3,20}$" required>
         </div>
         <div class="form-group">
-            <label for="inputPassword"><ftm:message key="changePassword.newPassword"/></label>
+            <label for="inputPassword"><fmt:message key="changePassword.newPassword"/></label>
             <input type="password" name="newPassword" class="form-control" id="inputPassword"
-                   placeholder="<ftm:message key="login.password"/>" pattern="^[\w]{3,20}$" required>
+                   placeholder="<fmt:message key="login.password"/>" pattern="^[\w]{3,20}$" required>
         </div>
         <div class="form-group">
-            <label for="inputConfirmPassword"><ftm:message key="changePassword.repeatPassword"/></label>
+            <label for="inputConfirmPassword"><fmt:message key="changePassword.repeatPassword"/></label>
             <input type="password" class="form-control" id="inputConfirmPassword"
-                   placeholder="<ftm:message key="login.password"/>" pattern="^[\w]{3,20}$" required>
+                   placeholder="<fmt:message key="login.password"/>" pattern="^[\w]{3,20}$" required>
         </div>
         <label style="color: red">${errorChangePasMessage}</label>
         <br/>
         <button type="submit" name="command" value="change_password" class="btn btn-primary" id="changePasswordButton">
-            <ftm:message key="login.submit"/>
+            <fmt:message key="login.submit"/>
         </button>
     </form>
 </div>

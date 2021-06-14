@@ -30,4 +30,13 @@ public interface BetDao {
      * @throws DaoException the dao exception
      */
     Optional<Bet> findById(int betId) throws DaoException;
+
+    /**
+     * Removes bets on race
+     *
+     * @param raceId the race id
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
+    boolean removeRaceBets(int raceId) throws DaoException;
 }
