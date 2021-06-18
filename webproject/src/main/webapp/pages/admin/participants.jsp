@@ -22,6 +22,7 @@
             <form action="controller" method="post">
                 <button type="submit" name="command" value="to_add_participant"><fmt:message key="adminParticipants.addParticipant"/></button>
             </form>
+            <label style="color: red">${participantDeleted}</label>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -39,6 +40,9 @@
                         <td><c:out value="${participant.weight}"/></td>
                         <td><a href="controller?command=to_edit_participant&participant_id=${participant.participantID}">
                             <fmt:message key="adminParticipants.edit"/></a>
+                        </td>
+                        <td><a href="controller?command=delete_participant&participant_id=${participant.participantID}">
+                            <fmt:message key="adminParticipants.delete"/></a>
                         </td>
                     </tr>
                 </c:forEach>

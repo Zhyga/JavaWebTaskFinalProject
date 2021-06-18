@@ -26,6 +26,7 @@ public class BetsTableTag extends TagSupport {
     private ArrayList<Bet> bets;
     private static final String USER = "user";
     private static final String BOOKMAKER = "bookmaker";
+    private static final String ADMIN = "admin";
 
     /**
      * Sets participants
@@ -50,28 +51,35 @@ public class BetsTableTag extends TagSupport {
         HttpSession session = pageContext.getSession();
         String roleName = (String) session.getAttribute(SessionAttribute.ROLE);
         try {
-            for (int i = 0; i < participants.size(); i++) {
-                pageContext.getOut().write("<tr style=\"vertical-align: middle\">\n" +
-                        "<td>" + participants.get(i).getJockey() + "</td>\n" +
-                        "<td>" + participants.get(i).getHorse() + "</td>\n" +
-                        "<td>" + participants.get(i).getWeight() + "</td>\n");
-                if (roleName.equals(USER)) {
-                    if (bets.size() != 0) {
+            if (roleName.equals(USER) || roleName.equals(ADMIN)) {
+                for (int i = 0, j = 0; i < participants.size(); i++) {
+                    pageContext.getOut().write("<tr style=\"vertical-align: middle\">\n" +
+                            "<td>" + participants.get(i).getJockey() + "</td>\n" +
+                            "<td>" + participants.get(i).getHorse() + "</td>\n" +
+                            "<td>" + participants.get(i).getWeight() + "</td>\n");
+                    if (bets.size() > j) {
                         pageContext.getOut().write("<td>" + bets.get(i).getFirstMultiplier() + "</td>\n" +
                                 "<td>\n" +
                                 "<form action=\"controller\" method=\"post\">\n" +
                                 "<input type=\"text\" name=\"betSize\" title=\"Bet size\">\n" +
                                 "<button type=\"submit\" name=\"command\" value=\"place_bet\">Bet</button>\n" +
-                                "<input type=\"hidden\" name=\"betId\" value=" + bets.get(i).getBetId() + ">\n" +
+                                "<input type=\"hidden\" name=\"betId\" value=" + bets.get(j).getBetId() + ">\n" +
                                 " </form>\n" +
                                 "</td>\n" +
                                 "</tr>\n");
+                        j++;
                     }
                 }
-                if(roleName.equals(BOOKMAKER)){
-                    pageContext.getOut().write("<td><input type=\"text\" name=\"betOdd\"></td>\n" +
+            }
+            if (roleName.equals(BOOKMAKER)) {
+                for (Participant participant : participants) {
+                    pageContext.getOut().write("<tr style=\"vertical-align: middle\">\n" +
+                            "<td>" + participant.getJockey() + "</td>\n" +
+                            "<td>" + participant.getHorse() + "</td>\n" +
+                            "<td>" + participant.getWeight() + "</td>\n");
+                    pageContext.getOut().write("<td><input type=\"text\" name=\"betOdd\" form=\"bet_odd_form" + participant.getParticipantID() + "\"></td>\n" +
                             "<td>\n" +
-                            "<form action=\"controller\" method=\"post\">\n" +
+                            "<form action=\"controller\" method=\"post\" id=\"bet_odd_form" + participant.getParticipantID() + "\">\n" +
                             "<button type=\"submit\" name=\"command\" value=\"add_odd\">Submit</button>\n" +
                             " </form>\n" +
                             "</td>\n" +

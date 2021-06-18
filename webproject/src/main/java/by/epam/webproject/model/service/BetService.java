@@ -33,6 +33,16 @@ public interface BetService {
     Optional<Bet> findById(int betId) throws ServiceException;
 
     /**
+     * Creates new bet
+     *
+     * @param betOdd the bet odd
+     * @param raceId the race id
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean addBet(String betOdd,int raceId) throws ServiceException;
+
+    /**
      *
      * @param raceId the race id
      * @return the boolean

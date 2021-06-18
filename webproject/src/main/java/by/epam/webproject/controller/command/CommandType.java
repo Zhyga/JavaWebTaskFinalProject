@@ -109,6 +109,11 @@ public enum CommandType {
             this.command = new EditParticipantCommand();
         }
     },
+    DELETE_PARTICIPANT{
+        {
+            this.command = new DeleteParticipantCommand();
+        }
+    },
     TO_PROFILE{
         {
             this.command = new ToProfilePageCommand();

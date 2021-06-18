@@ -38,13 +38,28 @@ public class ParticipantsServiceImpl implements ParticipantService {
     }
 
     @Override
-    public boolean update(String jockey, String horse, String weight) throws ServiceException {
+    public boolean deleteParticipant(String participantId) throws ServiceException {
+        boolean isDeleted = false;
+        try {
+            if(ParticipantValidator.isIdCorrect(participantId)) {
+                int participantIdInt = Integer.parseInt(participantId);
+                isDeleted = participantDao.delete(participantIdInt);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return isDeleted;
+    }
+
+    @Override
+    public boolean update(String jockey, String horse, String weight, String participantId) throws ServiceException {
         boolean isUpdated = false;
         if(ParticipantValidator.isJockeyCorrect(jockey) && ParticipantValidator.isHorseCorrect(horse) &&
-                ParticipantValidator.isWeightCorrect(weight)) {
+                ParticipantValidator.isWeightCorrect(weight) && ParticipantValidator.isIdCorrect(participantId)) {
             int weightInt = Integer.parseInt(weight);
+            int participantIdInt = Integer.parseInt(participantId);
             try {
-                if(participantDao.update(jockey, horse, weightInt)){
+                if(participantDao.update(jockey, horse, weightInt,participantIdInt)){
                     isUpdated = true;
                 }
             } catch (DaoException e) {

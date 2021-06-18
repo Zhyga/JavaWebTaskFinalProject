@@ -24,7 +24,7 @@
         </p>
         <p>
             <label>Horse:</label>
-            <input type="text" name="horse" value="${horse}" required pattern="^[A-Za-z]{3,45}$">
+            <input type="text" name="horse" value="${horse}" required pattern="^[A-Za-z ._,-]{3,45}$">
         </p>
         <p>
             <label>Weight:</label>
@@ -32,6 +32,7 @@
         </p>
         <p>
             <button type="submit" name="command" value="edit_participant"><fmt:message key="adminParticipants.editParticipant"/></button>
+            <input type="hidden" name="participant_id" value="${participant_id}">
         </p>
 
     </form>

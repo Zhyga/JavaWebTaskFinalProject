@@ -71,6 +71,11 @@ public class RaceServiceImpl implements RaceService {
     }
 
     @Override
+    public boolean updateRace(String title, int rounds, String details) throws ServiceException {
+        return false;
+    }
+
+    @Override
     public List<Race> findAllRaces() throws ServiceException {
         try {
             List<Race> races = raceDao.findAllRaces();
@@ -78,10 +83,5 @@ public class RaceServiceImpl implements RaceService {
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-    }
-
-    @Override
-    public boolean updateRace(String title, int rounds, String details) throws ServiceException {//todo not used
-        return false;
     }
 }

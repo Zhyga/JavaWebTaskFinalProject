@@ -43,7 +43,7 @@ public class PlaceBetCommand implements Command {
         HttpSession session = request.getSession();
         String stringBetSize = request.getParameter(RequestParameter.BET_SIZE);
         String stringBetId = request.getParameter(RequestParameter.BET_ID);
-        if (!CardValidator.isAmountCorrect(stringBetSize) && !stringBetId.matches("\\d")) {//fixme
+        if (!CardValidator.isAmountCorrect(stringBetSize) && !stringBetId.matches("\\d")) {
             page = (String) session.getAttribute(SessionAttribute.CURRENT_PAGE);
         } else {
             int betId = Integer.parseInt(stringBetId);

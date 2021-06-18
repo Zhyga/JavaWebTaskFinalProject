@@ -28,6 +28,7 @@ public class BetDaoImpl implements BetDao {
             "FROM bets INNER JOIN races on bets.race_id = races.race_id WHERE bets.race_id = ?";
     private static final String FIND_BET_BY_ID = "SELECT bet_id,type_of_bet,first_multiplier,second_multiplier,bets.race_id " +
             "FROM bets WHERE bet_id = ?";
+    private static final String ADD = "INSERT INTO bets (first_multiplier,bets.race_id) VALUES (?,?)";
     private static final String DELETE_BETS = "DELETE FROM bets WHERE bets.race_id = ?";
 
     private BetDaoImpl() {
@@ -75,6 +76,21 @@ public class BetDaoImpl implements BetDao {
     }
 
     @Override
+    public boolean add(int raceId, double firstMultiplier) throws DaoException {
+        boolean isAdded;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD);) {
+            statement.setDouble(1, firstMultiplier);
+            statement.setInt(2, raceId);
+            statement.executeUpdate();
+            isAdded = true;
+        } catch (SQLException e) {
+            throw new DaoException("Error while creating race", e);
+        }
+        return isAdded;
+    }
+
+    @Override
     public boolean removeRaceBets(int raceId) throws DaoException {
         boolean isRemoved;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -94,7 +110,6 @@ public class BetDaoImpl implements BetDao {
         bet.setTypeOfBet(resultSet.getString(ColumnName.TYPE_OF_BET));
         bet.setFirstMultiplier(resultSet.getDouble(ColumnName.FIRST_MULTIPLIER));
         bet.setSecondMultiplier(resultSet.getDouble(ColumnName.SECOND_MULTIPLIER));
-        //bet.setRaceId(resultSet.getInt(ColumnName.RACE_ID));
         return bet;
     }
 }

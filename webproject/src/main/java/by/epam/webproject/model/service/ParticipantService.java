@@ -26,15 +26,25 @@ public interface ParticipantService {
     boolean add(String jockey, String horse,String weight) throws ServiceException;
 
     /**
+     * Delete participant
+     *
+     * @param participantId the participant id
+     * @return the boolean
+     * @throws ServiceException the service exception
+     */
+    boolean deleteParticipant(String participantId) throws ServiceException;
+
+    /**
      * Update participant
      *
      * @param jockey the jockey
      * @param horse  the horse
      * @param weight the weight
+     * @param participantId the participant id
      * @return the boolean
      * @throws ServiceException the service exception
      */
-    boolean update(String jockey, String horse,String weight) throws ServiceException;
+    boolean update(String jockey, String horse,String weight, String participantId) throws ServiceException;
 
     /**
      * Find all participants

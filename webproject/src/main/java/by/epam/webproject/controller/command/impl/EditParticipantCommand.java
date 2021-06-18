@@ -18,11 +18,12 @@ public class EditParticipantCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        String participantId = request.getParameter(RequestParameter.PARTICIPANT_ID);
         String jockey = request.getParameter(RequestParameter.JOCKEY);
         String horse = request.getParameter(RequestParameter.HORSE);
         String weight = request.getParameter(RequestParameter.WEIGHT);
         try {
-            participantService.update(jockey,horse,weight);
+            participantService.update(jockey,horse,weight,participantId);
             request.setAttribute(RequestAttribute.ADMIN_PARTICIPANTS_ERROR,"Participant updated successfully");
         } catch (ServiceException e) {
             logger.error("Error while updating participant", e);

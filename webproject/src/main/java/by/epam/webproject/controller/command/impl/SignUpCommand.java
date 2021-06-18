@@ -5,7 +5,6 @@ import by.epam.webproject.controller.RequestAttribute;
 import by.epam.webproject.controller.RequestParameter;
 import by.epam.webproject.controller.command.Command;
 import by.epam.webproject.exception.ServiceException;
-import by.epam.webproject.model.entity.User;
 import by.epam.webproject.model.service.UserService;
 import by.epam.webproject.model.service.impl.UserServiceImpl;
 import by.epam.webproject.util.EmailSender;

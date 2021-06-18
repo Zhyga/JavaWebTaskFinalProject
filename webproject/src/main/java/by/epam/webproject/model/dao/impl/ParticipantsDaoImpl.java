@@ -28,7 +28,8 @@ import java.util.Optional;
 public class ParticipantsDaoImpl implements ParticipantDao {
     private static final ParticipantsDaoImpl instance = new ParticipantsDaoImpl();
     private static final String ADD = "INSERT INTO participants (jockey,horse,weight) VALUES (?,?,?)";
-    private static final String UPDATE = "UPDATE participants SET jockey = ?, horse = ?, weight = ?";
+    private static final String UPDATE = "UPDATE participants SET jockey = ?, horse = ?, weight = ? WHERE participant_id = ?";
+    private static final String DELETE = "DELETE FROM participants WHERE participant_id = ?";
     private static final String FIND_ALL = "SELECT participant_id,horse,weight,jockey FROM participants";
     private static final String FIND_BY_HORSE = "SELECT participant_id,horse,weight,jockey FROM participants WHERE horse = ?";
     private static final String FIND_BY_ID = "SELECT participant_id,horse,weight,jockey FROM participants WHERE participant_id = ?";
@@ -63,7 +64,22 @@ public class ParticipantsDaoImpl implements ParticipantDao {
     }
 
     @Override
-    public boolean update(String jockey, String horse, int weight) throws DaoException {
+    public boolean delete(int participantId) throws DaoException {
+        boolean isDeleted;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(DELETE);
+        ) {
+            statement.setInt(1,participantId);
+            statement.executeUpdate();
+            isDeleted = true;
+        } catch (SQLException e) {
+            throw new DaoException("Error while deleting participant", e);
+        }
+        return isDeleted;
+    }
+
+    @Override
+    public boolean update(String jockey, String horse, int weight, int participantId) throws DaoException {
         boolean isUpdated;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE);
@@ -71,6 +87,7 @@ public class ParticipantsDaoImpl implements ParticipantDao {
             statement.setString(1,jockey);
             statement.setString(2,horse);
             statement.setInt(3,weight);
+            statement.setInt(4,participantId);
             statement.executeUpdate();
             isUpdated = true;
         } catch (SQLException e) {

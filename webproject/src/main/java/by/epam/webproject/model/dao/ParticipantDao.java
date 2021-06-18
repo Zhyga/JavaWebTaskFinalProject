@@ -25,15 +25,25 @@ public interface ParticipantDao {
     boolean add(String jockey, String horse,int weight) throws DaoException;
 
     /**
+     * Delete participant
+     *
+     * @param participantId the participant id
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
+    boolean delete(int participantId) throws DaoException;
+
+    /**
      * Update participant
      *
      * @param jockey the jockey
      * @param horse the horse
      * @param weight the weight
+     * @param participantID the participant id
      * @return the boolean
      * @throws DaoException the dao exception
      */
-    boolean update(String jockey,String horse, int weight) throws DaoException;
+    boolean update(String jockey,String horse, int weight, int participantID) throws DaoException;
 
     /**
      * Find all participants

@@ -2,6 +2,7 @@ package by.epam.webproject.controller.command.impl;
 
 import by.epam.webproject.controller.PagePath;
 import by.epam.webproject.controller.RequestAttribute;
+import by.epam.webproject.controller.RequestParameter;
 import by.epam.webproject.controller.command.Command;
 import by.epam.webproject.exception.ServiceException;
 import by.epam.webproject.model.service.impl.RaceServiceImpl;
@@ -23,7 +24,7 @@ public class DeleteRaceCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String page;
-        String raceIdString = request.getParameter("raceId");
+        String raceIdString = request.getParameter(RequestParameter.RACE_ID);
         int raceId = Integer.parseInt(raceIdString);
         try {
             if (raceService.deleteRace(raceId)) {

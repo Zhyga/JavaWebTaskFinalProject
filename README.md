@@ -16,20 +16,59 @@
    * Посмотреть инфорцию о скачке
    * Посмотреть виды ставок
    * Сделать ставку
-   * Пополнить баланс
+   * Пополнить и вывести баланс
    * Посмотреть сделанные ставки
-   * Редактировать информацию в профиле
+   * Изменить пароль
 ## Букмекер
 Пользователь, подтвержденный Администратором. Устанавливает уровень выигрыша(коэфиценты) на виды скачек.
 * Описание действий букмекера
    * Устанавливает уровень выигрыша
+   * Фиксирование результатов скачек
 ## Администратор
 Администратор управляет системой. Может управлять пользователями, создает и редактирует скачки, дает статус Букмекер, фиксирует результаты скачек.
 * Описание действий администратора
-   * Добавление скачки
-   * Редактирование видов ставок на скачки
-   * Просмотр профиля пользователя
-   * Просмотр истории ставок пользователя
-   * Блокировка пользователя(?)
-   * Фиксирование результатов скачек
-   * Выдача статуса Букмекер
+   * Добавить скачку
+   * Удалить скачку
+   * Добавить участника
+   * Удалить участника
+   * Изменить участника
+   * Посмотреть всех пользователей
+   * Изменить роль пользователя
+   * Изменить баланс пользователя
+# JavaWebTaskFinalProject
+# Short description
+Horse racing. The client places different types of bets (win, top three, outsider, exact place, and others) on the races. The bookmaker sets the level of the winnings. The administrator manages user accounts, creates (modifies) races, and also fixate (random generation) their results.
+#Actors
+## The guest
+An unauthorized user can go to the site and get acquainted with the current races and see the results of the past races. Also, the guest can register or authorize to be able to place bets himself.
+* Description of guest actions
+  * Registration
+  * Authorization
+  * View current races
+  * View the results of previous races
+  * Change of localization
+## User
+An authorized user can select the race he is interested in, see what types of bets are available on this race, place a bet, replenish the balance, edit information in the profile, see which races he placed a bet on. (Optional) Sell a bet.
+* Description of guest actions
+   * View information about the race
+   * View types of bets
+   * Place a bet
+   * Deposit and withdraw balance
+   * View bets made
+   * Edit password
+## Bookmaker
+User confirmed by the Administrator. Sets the level of winnings (coefficients) for the types of races.
+* Description of the bookmaker's actions
+   * Sets the odds
+   * Fixing the results of the races
+## Administrator
+The administrator manages the system. He can manage users, create and edit races, gives the Bookmaker status, records the results of races.
+* Description of administrator actions
+   * Adding races
+   * Deleting races
+   * Adding participants
+   * Deleting participants
+   * Editing participants
+   * View all users
+   * Change user role
+   * Change user balance

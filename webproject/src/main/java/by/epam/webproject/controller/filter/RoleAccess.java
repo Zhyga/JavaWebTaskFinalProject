@@ -53,14 +53,10 @@ public enum RoleAccess {
             TO_CHANGE_PASSWORD,
             CHANGE_PASSWORD,
             TO_PROFILE,
-            TO_ADD_RACE,
             TO_ADD_BALANCE,
             DEPOSIT,
             WITHDRAW,
-            TO_ADMIN_RACES,
-            TO_ADMIN_USERS,
-            DELETE_RACE,
-            CREATE_RACE
+            ADD_ODD
     ).map(CommandType::getCommand).collect(Collectors.toSet())),
     ADMIN(Stream.of(
             PLACE_BET,
@@ -86,7 +82,8 @@ public enum RoleAccess {
             TO_ADD_PARTICIPANT,
             ADD_PARTICIPANT,
             TO_EDIT_PARTICIPANT,
-            EDIT_PARTICIPANT
+            EDIT_PARTICIPANT,
+            DELETE_PARTICIPANT
     ).map(CommandType::getCommand).collect(Collectors.toSet()));
 
     private final Set<Command> commands;

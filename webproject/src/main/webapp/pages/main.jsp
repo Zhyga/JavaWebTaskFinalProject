@@ -23,12 +23,6 @@
                     <fmt:message key="main.currentEvents"/></button>
             </form>
         </li>
-        <li class="nav-item">
-            <form action="controller" method="post" class="mb-0">
-                <button class="nav-link pastEventsBut" type="submit" name="command" value="to_main">
-                    <fmt:message key="main.pastEvents"/></button>
-            </form>
-        </li>
     </ul>
     <br/>
     <table class="table table-striped">

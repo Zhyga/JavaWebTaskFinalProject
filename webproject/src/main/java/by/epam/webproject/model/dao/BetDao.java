@@ -32,6 +32,16 @@ public interface BetDao {
     Optional<Bet> findById(int betId) throws DaoException;
 
     /**
+     * Add odd for bet id
+     *
+     * @param raceId the race id
+     * @param firstMultiplier the first multiplier
+     * @return the boolean
+     * @throws DaoException the dao exception
+     */
+    boolean add(int raceId, double firstMultiplier) throws DaoException;
+
+    /**
      * Removes bets on race
      *
      * @param raceId the race id

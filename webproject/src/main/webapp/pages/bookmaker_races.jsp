@@ -35,7 +35,7 @@
                         <td><c:out value="${race.rounds}"/></td>
                         <td><c:out value="${race.details}"/></td>
                         <td><a href="controller?command=calculate_winner&raceId=${race.raceId}">
-                            Рассчитать ставку
+                            <fmt:message key="bookmaker.calcBet"/>
                         </a></td>
                     </tr>
                 </c:forEach>

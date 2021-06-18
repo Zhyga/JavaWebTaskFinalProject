@@ -35,6 +35,7 @@ public class RequestParameter {
     public static final String JOCKEY = "jockey";
     public static final String HORSE = "horse";
     public static final String WEIGHT = "weight";
+    public static final String BET_ODD = "betOdd";
 
     private RequestParameter(){}
 }

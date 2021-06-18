@@ -17,6 +17,11 @@ public class SessionAttribute {
     public static final String RACE_BET_LIST = "raceBets";
     public static final String BETS_INFO_LIST = "betsInfoList";
     public static final String USERS_LIST = "usersList";
+    public static final String RACE_PARTICIPANTS = "raceParticipants";
+    public static final String PARTICIPANT_ID = "participant_id";
+    public static final String JOCKEY = "jockey";
+    public static final String HORSE = "horse";
+    public static final String WEIGHT = "weight";
 
     private SessionAttribute(){
     }

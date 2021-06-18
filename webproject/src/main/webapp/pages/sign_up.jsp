@@ -19,7 +19,7 @@
         <div class="form-group">
             <label for="inputEmail"><fmt:message key="login.email"/></label>
             <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
-                   placeholder="Enter email" required pattern="^[\w\.]{3,13}@(gmail|yandex|tut|mail)\.(com|ru|by)$">
+                   placeholder="Enter email" required>
             <small id="emailHelp" class="form-text text-muted"><fmt:message key="login.emailHelper"/></small>
         </div>
         <div class="form-group">

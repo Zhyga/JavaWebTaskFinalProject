@@ -3,7 +3,7 @@ package by.epam.webproject.model.validator;
 public class ParticipantValidator {
     private static final String ID_REGEX = "^[1-9]\\d{0,9}$";
     private static final String JOCKEY_REGEX = "^[A-Za-z]{3,45}|[A-Za-z]*\\s[A-Za-z]{3,45}$";
-    private static final String HORSE_REGEX = "^[A-Za-z]{3,45}$";
+    private static final String HORSE_REGEX = "^^[A-Za-z ._,-]{3,45}$";
     private static final String WEIGHT_REGEX = "^[1-9][0-9]{1,2}$";
 
     /**

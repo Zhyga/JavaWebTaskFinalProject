@@ -41,6 +41,20 @@ public class BetServiceImpl implements BetService {
     }
 
     @Override
+    public boolean addBet(String betOdd, int raceId) throws ServiceException {
+        boolean isAdded = false;
+        double betOddDouble = Double.parseDouble(betOdd);
+        try {
+            if(betDao.add(raceId,betOddDouble)){
+                isAdded = true;
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        return isAdded;
+    }
+
+    @Override
     public boolean clearOdds(int raceId) throws ServiceException {
         boolean isCleared = false;
         try {

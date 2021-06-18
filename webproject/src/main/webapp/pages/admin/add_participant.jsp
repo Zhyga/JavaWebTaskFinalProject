@@ -24,7 +24,7 @@
         </p>
         <p>
             <label>Horse:</label>
-            <input type="text" name="horse" required pattern="^[A-Za-z]{3,45}$">
+            <input type="text" name="horse" required pattern="^^[A-Za-z ._,-]{3,45}$">
         </p>
         <p>
             <label>Weight:</label>
