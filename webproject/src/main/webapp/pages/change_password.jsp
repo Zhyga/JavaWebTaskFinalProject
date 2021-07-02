@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${currentLocale}"/>
+<fmt:setLocale value="${currentLocale}" scope="session"/>
 <fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>

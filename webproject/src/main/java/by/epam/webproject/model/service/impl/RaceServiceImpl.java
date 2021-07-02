@@ -42,16 +42,20 @@ public class RaceServiceImpl implements RaceService {
                 String race_data_string = date + " " + time;
                 DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 LocalDateTime race_date = LocalDateTime.parse(race_data_string, inputFormatter);
-                List<Participant> p = new ArrayList<>();
+                List<Participant> participantArrayList = new ArrayList<>();
                 for (String participant : participants) {
                     Optional<Participant> participantOptional = participantDao.findByHorse(participant);
                     if (participantOptional.isPresent()) {
-                        p.add(participantOptional.get());
+                        participantArrayList.add(participantOptional.get());
                     }
                 }
-                RaceData raceData = new RaceData(race_date, p);
-                raceDateDao.add(raceData);
-                isCreated = raceDao.add(title, roundNumber, details, raceData);
+                RaceData raceData = new RaceData(race_date, participantArrayList);
+                if(raceDateDao.findAllParticipantsByDate(race_data_string).size() > 0){
+                    return isCreated;
+                }else {
+                    raceDateDao.add(raceData);
+                    isCreated = raceDao.add(title, roundNumber, details, raceData);
+                }
             }
         } catch (DaoException e) {
             throw new ServiceException(e);

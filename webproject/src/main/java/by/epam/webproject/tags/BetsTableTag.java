@@ -72,16 +72,16 @@ public class BetsTableTag extends TagSupport {
                 }
             }
             if (roleName.equals(BOOKMAKER)) {
-                for (Participant participant : participants) {
+                for (int i = 0; i < participants.size(); i++) {
                     pageContext.getOut().write("<tr style=\"vertical-align: middle\">\n" +
-                            "<td>" + participant.getJockey() + "</td>\n" +
-                            "<td>" + participant.getHorse() + "</td>\n" +
-                            "<td>" + participant.getWeight() + "</td>\n");
-                    pageContext.getOut().write("<td><input type=\"text\" name=\"betOdd\" form=\"bet_odd_form" + participant.getParticipantID() + "\"></td>\n" +
+                            "<td>" + participants.get(i).getJockey() + "</td>\n" +
+                            "<td>" + participants.get(i).getHorse() + "</td>\n" +
+                            "<td>" + participants.get(i).getWeight() + "</td>\n");
+                    pageContext.getOut().write("<td><input type=\"text\" name=\"betOdd\" form=\"bet_odd_form" + participants.get(i).getParticipantID() + "\"></td>\n" +
                             "<td>\n" +
-                            "<form action=\"controller\" method=\"post\" id=\"bet_odd_form" + participant.getParticipantID() + "\">\n" +
+                            "<form action=\"controller\" method=\"post\" id=\"bet_odd_form" + participants.get(i).getParticipantID() + "\">\n" +
                             "<button type=\"submit\" name=\"command\" value=\"add_odd\">Submit</button>\n" +
-                            " </form>\n" +
+                            "</form>\n" +
                             "</td>\n" +
                             "</tr>\n");
                 }

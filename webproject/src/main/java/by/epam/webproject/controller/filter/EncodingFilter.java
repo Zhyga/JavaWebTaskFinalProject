@@ -1,5 +1,7 @@
 package by.epam.webproject.controller.filter;
 
+import by.epam.webproject.model.pool.ConnectionPool;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
@@ -31,5 +33,6 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void destroy() {
+        ConnectionPool.INSTANCE.destroyPool();
     }
 }

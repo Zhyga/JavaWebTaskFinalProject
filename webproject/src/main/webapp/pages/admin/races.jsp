@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
-<fmt:setLocale value="${currentLocale}"/>
+<fmt:setLocale value="${currentLocale}" scope="session"/>
 <fmt:setBundle basename="l10n.front-text"/>
 <html>
 <head>
